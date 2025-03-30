@@ -1,60 +1,76 @@
-import torch
-import transformers
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from rl_training import ReinforcementTrainer  # Custom RL module (to be implemented)
-import json
 import os
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
+from datasets import load_dataset
+from huggingface_hub import login
+from flask import Flask, render_template, request, jsonify
 
-# Load Large Language Model (Llama or Falcon)
-MODEL_NAME = "meta-llama/Llama-2-7b-chat-hf"
-model = AutoModelForCausalLM.from_pretrained(MODEL_NAME)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+# Authenticate with Hugging Face
+token = "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"
+login(token)
 
-# Load Cybersecurity Training Data
-DATA_PATH = "cybersecurity_data.json"
-def load_training_data():
-    with open(DATA_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+# Model and Dataset Configuration
+MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
+DATASET_PATH = "./datasets/cybersecurity_data.json"
 
-data = load_training_data()
+# Load Dataset
+try:
+    dataset = load_dataset('json', data_files=DATASET_PATH)
+except Exception as e:
+    raise RuntimeError(f"Failed to load dataset: {e}")
 
-# Implement Reinforcement Learning with Human Feedback (RLHF)
-trainer = ReinforcementTrainer(model, tokenizer, data)
-trainer.train()
+# Load Tokenizer and Model
+try:
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_auth_token=True)
+    model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, use_auth_token=True)
+except Exception as e:
+    raise RuntimeError(f"Failed to load model: {e}")
 
-# Self-Learning System (Chat Memory & Error Handling)
-CHAT_LOG = "chat_memory.json"
-def save_chat_log(user_input, response):
-    chat_data = []
-    if os.path.exists(CHAT_LOG):
-        with open(CHAT_LOG, "r") as f:
-            chat_data = json.load(f)
-    chat_data.append({"user": user_input, "lewis": response})
-    with open(CHAT_LOG, "w") as f:
-        json.dump(chat_data, f, indent=4)
+# Tokenization Function
+def tokenize_function(examples):
+    return tokenizer(examples['text'], padding="max_length", truncation=True)
 
-def chat(user_input):
+tokenized_datasets = dataset.map(tokenize_function, batched=True)
+
+# Training Configuration
+training_args = TrainingArguments(
+    output_dir="./results",
+    evaluation_strategy="epoch",
+    learning_rate=2e-5,
+    per_device_train_batch_size=1,
+    per_device_eval_batch_size=1,
+    num_train_epochs=5,
+    weight_decay=0.01,
+    save_total_limit=2,
+    logging_dir="./logs",
+    logging_steps=10,
+)
+
+# Initialize Trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_datasets["train"],
+    eval_dataset=tokenized_datasets.get("validation"),
+)
+
+# Flask Web UI Setup
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+@app.route("/ask", methods=["POST"])
+def ask():
+    user_input = request.json["question"]
     inputs = tokenizer(user_input, return_tensors="pt")
-    output = model.generate(**inputs, max_new_tokens=150)
+    output = model.generate(**inputs, max_length=150)
     response = tokenizer.decode(output[0], skip_special_tokens=True)
-    save_chat_log(user_input, response)
-    return response
+    return jsonify({"response": response})
 
-# Self-Modification System (Automated Code Evolution)
-SELF_MODIFY_PATH = "lewis_code.py"
-def self_modify():
-    with open(SELF_MODIFY_PATH, "r") as f:
-        code = f.read()
-    improved_code = trainer.refine_code(code)
-    with open(SELF_MODIFY_PATH, "w") as f:
-        f.write(improved_code)
-    print("LEWIS has improved its own code!")
-
-# Main Chatbot Loop
-while True:
-    user_input = input("You: ")
-    if user_input.lower() in ["exit", "quit"]:
-        break
-    response = chat(user_input)
-    print("LEWIS:", response)
-    self_modify()  # Periodic self-improvement
+if __name__ == "__main__":
+    trainer.train()
+    model.save_pretrained("./trained_model")
+    tokenizer.save_pretrained("./trained_model")
+    app.run(host="0.0.0.0", port=5000)
