@@ -11,7 +11,7 @@ login(token)
 
 # Model and Dataset Configuration
 MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.1"
-DATASET_PATH = "./datasets/cybersecurity_data.json"
+DATASET_PATH = "./datasets/cybersec_data.json"
 
 # Load Dataset
 try:
