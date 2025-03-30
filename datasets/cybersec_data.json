@@ -1,1 +1,67 @@
-hi
+{
+  "cybersecurity_commands": [
+    {
+      "command": "nmap -sV -Pn 192.168.1.1",
+      "description": "Scan a target to detect open ports and services.",
+      "expected_output": "List of open ports and running services.",
+      "error_handling": {
+        "common_errors": [
+          {
+            "error_message": "Failed to resolve hostname",
+            "solution": "Check the target IP or DNS settings."
+          },
+          {
+            "error_message": "Permission denied",
+            "solution": "Run the command with sudo."
+          }
+        ]
+      }
+    },
+    {
+      "command": "sqlmap -u 'http://example.com?id=1' --dbs",
+      "description": "Detect and exploit SQL injection vulnerabilities.",
+      "expected_output": "List of databases found on the target system.",
+      "error_handling": {
+        "common_errors": [
+          {
+            "error_message": "Target URL is not injectable",
+            "solution": "Check if the target is vulnerable by using '--level 5 --risk 3'."
+          }
+        ]
+      }
+    }
+  ],
+  
+  "error_fixing": [
+    {
+      "error_message": "ModuleNotFoundError: No module named 'flask'",
+      "solution": "Run 'pip install flask' to install the missing module."
+    },
+    {
+      "error_message": "Permission denied",
+      "solution": "Use 'sudo' before the command or check file permissions with 'ls -l'."
+    }
+  ],
+  
+  "chat_responses": [
+    {
+      "input": "How do I scan for open ports?",
+      "response": "You can use Nmap: 'nmap -sV -Pn [IP]' to scan for open ports."
+    },
+    {
+      "input": "How do I fix a broken Python script?",
+      "response": "Check the error message and refer to the documentation or run 'python3 -m pip install missing_module'."
+    }
+  ],
+  
+  "self_modification_rules": [
+    {
+      "trigger": "Recurring error in script execution",
+      "action": "Modify the affected function, test with new parameters, and log the improvement."
+    },
+    {
+      "trigger": "User repeatedly uses a specific command",
+      "action": "Add it to the quick-access suggestions for efficiency."
+    }
+  ]
+}
