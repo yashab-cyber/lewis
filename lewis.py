@@ -1,56 +1,69 @@
+# LEWIS - Linux Environment Working Intelligence System
+# Ethical Hacking AI Assistant with Self-Learning & Modification
+# Features: Custom LLM, Cybersecurity Tools, Hacker-Themed UI, Self-Modification
+
 import os
 import json
 import subprocess
-from flask import Flask, render_template, request
+import requests
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
+# Configuration
 CONFIG = {
-    "knowledge_base": "learning_data.json",
-    "self_modify": True,
-    "scripts_dir": "cyber_scripts"
+    "knowledge_base": "knowledge.json",
+    "scripts_directory": "cybersec_scripts/",
+    "self_modifying": True
 }
 
-# Ensure required directories exist
-os.makedirs(CONFIG["scripts_dir"], exist_ok=True)
-
-def load_knowledge():
-    if not os.path.exists(CONFIG['knowledge_base']):
-        return {}
+# Load knowledge base
+try:
     with open(CONFIG['knowledge_base'], 'r') as f:
-        return json.load(f)
+        KNOWLEDGE = json.load(f)
+except FileNotFoundError:
+    KNOWLEDGE = {"threats": [], "tools": []}
 
-def save_knowledge(data):
+# Self-Learning & Modification Engine
+def update_knowledge(new_data):
+    KNOWLEDGE["threats"].append(new_data)
     with open(CONFIG['knowledge_base'], 'w') as f:
-        json.dump(data, f, indent=4)
+        json.dump(KNOWLEDGE, f, indent=4)
+
+def self_modify():
+    if CONFIG["self_modifying"]:
+        with open(__file__, 'r+') as f:
+            code = f.read()
+            # Example modification: Inject a comment
+            modified_code = code.replace("# Self-Learning & Modification Engine", "# AI just modified itself!")
+            f.seek(0)
+            f.write(modified_code)
+            f.truncate()
+
+# AI Command Execution
+def execute_command(cmd):
+    try:
+        output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+        return output.decode("utf-8")
+    except subprocess.CalledProcessError as e:
+        return str(e.output.decode("utf-8"))
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/scan', methods=['POST'])
-def scan():
-    target = request.form.get("target")
-    result = subprocess.run(["nmap", "-F", target], capture_output=True, text=True)
-    return {"output": result.stdout}
-
-@app.route('/learn', methods=['POST'])
-def learn():
+@app.route('/execute', methods=['POST'])
+def run_command():
     data = request.json
-    knowledge = load_knowledge()
-    knowledge.update(data)
-    save_knowledge(knowledge)
-    return {"message": "Data learned successfully."}
+    command = data.get('command')
+    result = execute_command(command)
+    return jsonify({"output": result})
 
-@app.route('/self_modify', methods=['POST'])
-def self_modify():
-    if not CONFIG["self_modify"]:
-        return {"error": "Self-modification is disabled."}
-    
-    script_path = os.path.join(CONFIG["scripts_dir"], "auto_update.py")
-    if os.path.exists(script_path):
-        subprocess.run(["python3", script_path])
-    return {"message": "Self-modification executed."}
+@app.route('/train', methods=['POST'])
+def train_model():
+    data = request.json
+    update_knowledge(data)
+    return jsonify({"message": "Knowledge updated!"})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
