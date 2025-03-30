@@ -1,1 +1,23 @@
-hi
+hhtml_content = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEWIS AI - Cybersecurity Assistant</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>LEWIS AI - Cybersecurity Assistant</h1>
+        <textarea id="command" placeholder="Enter command..."></textarea>
+        <button onclick="executeCommand()">Execute</button>
+        <pre id="output"></pre>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+</html>
+'''
+
+with open("templates/index.html", "w") as f:
+    f.write(html_content)
