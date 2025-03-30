@@ -1,93 +1,164 @@
 import os
-import flask
 import json
-import shutil
 import subprocess
 from flask import Flask, render_template, request, jsonify
+from bs4 import BeautifulSoup
+import requests
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
+app = Flask(__name__)
 
-# AI Self-Learning: Logs system changes and improves performance
-LEARNING_PATH = "learning_data.json"
+CONFIG = {
+    "knowledge_base": "knowledge.json",
+    "code_archive": "code_evolution/",
+    "sources": [
+        "https://www.kali.org/docs/",
+        "https://owasp.org/www-project-top-ten/"
+    ]
+}
 
-# Load Learning Data
-def load_learning():
-    if os.path.exists(LEARNING_PATH):
-        with open(LEARNING_PATH, "r") as file:
-            return json.load(file)
-    return {"improvements": []}
+class LewisAI:
+    def __init__(self):
+        self.knowledge = self.load_knowledge()
 
-# Save Learning Data
-def save_learning(data):
-    with open(LEARNING_PATH, "w") as file:
-        json.dump(data, file, indent=4)
+    def load_knowledge(self):
+        try:
+            with open(CONFIG['knowledge_base'], 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {"patterns": [], "vulnerabilities": [], "techniques": []}
 
-learning_data = load_learning()
+    def scrape_security_data(self):
+        for source in CONFIG['sources']:
+            try:
+                response = requests.get(source, timeout=10)
+                soup = BeautifulSoup(response.text, 'html.parser')
+                if "kali.org" in source:
+                    self.process_kali_docs(soup)
+            except Exception as e:
+                print(f"Error processing {source}: {str(e)}")
+        self.save_knowledge()
 
-# Home Route
+    def process_kali_docs(self, soup):
+        tools = soup.find_all('div', class_='tool-card')
+        for tool in tools:
+            metadata = {
+                'name': tool.h3.text.strip(),
+                'description': tool.p.text
+            }
+            if metadata not in self.knowledge['patterns']:
+                self.knowledge['patterns'].append(metadata)
+
+    def save_knowledge(self):
+        with open(CONFIG['knowledge_base'], 'w') as f:
+            json.dump(self.knowledge, f, indent=4)
+
+    def execute_cyber_command(self, command):
+        try:
+            result = subprocess.run(command, shell=True, capture_output=True, text=True)
+            return result.stdout if result.stdout else result.stderr
+        except Exception as e:
+            return str(e)
+
+lewis_ai = LewisAI()
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# AI Self-Modification: Updates itself based on feedback
-@app.route('/learn', methods=['POST'])
-def learn():
-    feedback = request.json.get("feedback")
-    if feedback:
-        learning_data["improvements"].append(feedback)
-        save_learning(learning_data)
-        return jsonify({"status": "success", "message": "Learning data updated!"})
-    return jsonify({"status": "error", "message": "No feedback received."})
-
-# Execute Cybersecurity Commands
 @app.route('/execute', methods=['POST'])
 def execute():
-    command = request.json.get("command")
-    try:
-        result = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, text=True)
-        return jsonify({"output": result})
-    except subprocess.CalledProcessError as e:
-        return jsonify({"error": str(e.output)})
+    data = request.json
+    command = data.get("command")
+    result = lewis_ai.execute_cyber_command(command)
+    return jsonify({"output": result})
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
 
-# Frontend: HTML, CSS, JS
-frontend_code = """
+# Frontend UI/UX (index.html)
+html_content = '''
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>LEWIS AI</title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEWIS AI - Cybersecurity Assistant</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <h1>Welcome to LEWIS</h1>
-    <textarea id="command" placeholder="Enter Command..."></textarea>
-    <button onclick="executeCommand()">Run</button>
-    <pre id="output"></pre>
-    
-    <script>
-        function executeCommand() {
-            let command = document.getElementById("command").value;
-            fetch('/execute', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ command: command })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("output").innerText = data.output || data.error;
-            });
-        }
-    </script>
+    <div class="container">
+        <h1>LEWIS AI - Cybersecurity Assistant</h1>
+        <textarea id="command" placeholder="Enter command..."></textarea>
+        <button onclick="executeCommand()">Execute</button>
+        <pre id="output"></pre>
+    </div>
+    <script src="static/script.js"></script>
 </body>
 </html>
-"""
+'''
 
-# Save Frontend Files
-os.makedirs("templates", exist_ok=True)
-os.makedirs("static", exist_ok=True)
 with open("templates/index.html", "w") as f:
-    f.write(frontend_code)
+    f.write(html_content)
+
+# CSS (static/style.css)
+css_content = '''
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    text-align: center;
+}
+.container {
+    margin: 50px auto;
+    width: 50%;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+}
+textarea {
+    width: 100%;
+    height: 100px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+}
+button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+pre {
+    background-color: black;
+    color: #00FF00;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    text-align: left;
+}
+'''
+
 with open("static/style.css", "w") as f:
-    f.write("body { font-family: Arial, sans-serif; background-color: #121212; color: white; text-align: center; }")
+    f.write(css_content)
+
+# JavaScript (static/script.js)
+js_content = '''
+function executeCommand() {
+    const command = document.getElementById("command").value;
+    fetch("/execute", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ command: command })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("output").innerText = data.output;
+    });
+}
+'''
+
+with open("static/script.js", "w") as f:
+    f.write(js_content)
