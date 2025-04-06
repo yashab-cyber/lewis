@@ -1,0 +1,8 @@
+app_name: "LEWIS"
+version: "1.0"
+default_theme: "cyberpunk"
+voice_enabled: true
+ai_engine: "gpt-neo"
+log_level: "debug"
+web_port: 5000
+database_path: "./database/lewis.db"

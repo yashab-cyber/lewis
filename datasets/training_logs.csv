@@ -1,0 +1,5 @@
+timestamp,tool,output,threat_level,notes
+2025-04-05 14:22:10,nmap,"Open ports: 22, 80",medium,"Potential SSH and HTTP exposure"
+2025-04-05 14:25:44,nikto,"X-XSS-Protection header missing",high,"Vulnerability in headers"
+2025-04-05 14:30:01,custom_script,"Login attempts exceeded",high,"Brute force attack suspected"
+2025-04-05 14:35:55,metasploit,"Exploit failed",low,"No vulnerability found"

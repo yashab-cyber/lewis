@@ -1,0 +1,10 @@
+whoami
+ifconfig
+ip a
+netstat -tulnp
+nmap
+nikto
+msfconsole
+cat /etc/passwd
+uptime
+df -h
