@@ -1,0 +1,72 @@
+2025-04-17 02:14:25,811 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-17 02:14:25,811 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-17 02:40:27,841 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-17 02:40:27,842 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-17 02:44:36,929 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-17 02:44:36,929 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-17 03:02:33,051 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-17 03:02:33,052 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-17 03:03:08,269 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-17 03:03:08,270 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-17 03:04:38,550 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-17 03:04:38,550 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-19 03:52:52,576 - User query: Predict threat
+2025-04-19 03:52:53,030 - No target or log file provided for threat prediction.
+2025-04-19 04:07:48,308 - User query: Predict Threat
+2025-04-19 04:08:13,654 - Threat prediction completed.
+2025-04-19 04:14:05,533 - User query: Predict Threat
+2025-04-19 04:15:43,156 - Threat prediction completed.
+2025-04-19 04:18:30,866 - User query: Predict Threat
+2025-04-19 04:26:11,653 - Threat prediction completed.
+2025-04-19 04:28:12,241 - User query: Predict Threat
+2025-04-19 04:30:22,955 - Threat prediction completed.
+2025-04-19 04:36:10,711 - User query: Predict Threat
+2025-04-19 04:36:52,277 - Threat prediction completed.
+2025-04-19 04:39:25,729 - User query: Predict Threat
+2025-04-19 04:39:29,650 - Threat prediction completed.
+2025-04-19 04:40:11,856 - User query: Predict Threat
+2025-04-19 04:40:14,568 - Threat prediction completed.
+2025-04-19 04:40:32,080 - User query: Predict Threat
+2025-04-19 04:40:32,085 - No target or log file provided for threat prediction.
+2025-04-19 04:42:48,822 - User query: Predict Threat
+2025-04-19 04:42:58,602 - Threat prediction completed.
+2025-04-19 04:45:09,676 - User query: Predict Threat
+2025-04-19 04:46:56,537 - Threat prediction completed.
+2025-04-19 04:48:02,814 - User query: Predict Threat
+2025-04-19 04:48:02,815 - No target or log file provided for threat prediction.
+2025-04-19 04:48:29,739 - User query: Predict Threat
+2025-04-19 04:48:54,940 - Threat prediction completed.
+2025-04-19 04:51:59,040 - User query: Predict Threat
+2025-04-19 04:52:04,095 - Threat prediction completed.
+2025-04-19 04:55:33,753 - User query: predict threat
+2025-04-19 04:55:38,261 - Threat prediction completed.
+2025-04-20 15:17:57,353 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-20 15:17:57,379 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-20 15:19:38,131 - Imported existing <module 'comtypes.gen' from 'C:\\Users\\Faiz Abdi\\AppData\\Roaming\\Python\\Python313\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-04-20 15:19:38,146 - Using writeable comtypes cache directory: 'C:\Users\Faiz Abdi\AppData\Roaming\Python\Python313\site-packages\comtypes\gen'
+2025-04-20 15:21:27,429 - User query: predict threat
+2025-04-20 15:21:27,433 - No target or log file provided for threat prediction.
+2025-04-20 15:21:43,368 - User query: predict threat
+2025-04-20 15:21:53,515 - Threat prediction completed.
+2025-04-22 07:01:17,002 - User query: Can you analyze this log?
+2025-04-22 07:01:17,083 - Unhandled intent: Tell me what you'd like to do.
+2025-04-22 07:01:46,025 - User query: Can you analyze this log?
+2025-04-22 07:01:46,031 - Unhandled intent: Tell me what you'd like to do.
+2025-04-22 07:02:04,823 - User query: predict threat
+2025-04-22 07:02:35,773 - Threat prediction completed.
+2025-04-22 07:07:00,974 - User query: predict threat
+2025-04-22 07:07:03,966 - Threat prediction completed.
+2025-04-22 07:07:12,705 - User query: predict threat
+2025-04-22 07:07:23,001 - Threat prediction completed.
+2025-04-22 07:07:52,667 - User query: Can you analyze this log?
+2025-04-22 07:07:52,673 - Unhandled intent: LEWIS is listening...
+2025-04-23 02:24:42,195 - User query: predict threat
+2025-04-23 02:25:02,791 - Hybrid threat analysis completed.
+2025-04-23 02:29:36,388 - User query: predict threat
+2025-04-23 02:29:58,436 - Hybrid threat analysis completed.
+2025-04-23 02:30:13,268 - User query: predict threat
+2025-04-23 02:30:33,110 - Hybrid threat analysis completed.
+2025-04-23 02:39:48,433 - User query: predict threat
+2025-04-23 02:39:54,812 - Hybrid threat analysis completed.
+2025-04-23 02:40:11,428 - User query: predict threat
+2025-04-23 02:40:58,013 - Hybrid threat analysis completed.
