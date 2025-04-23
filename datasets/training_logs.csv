@@ -1,0 +1,101 @@
+log,label
+DNS query for example.com,benign
+SQL injection attempt on /login,malicious
+Port scanning from 45.33.32.156,malicious
+GET /home HTTP/1.1,benign
+XSS payload detected in comment section,malicious
+GET /images/logo.png HTTP/1.1,benign
+Malware download from suspicious URL,malicious
+User login from 192.168.0.1,benign
+System time synchronized,benign
+Base64 encoded payload detected,malicious
+Port scanning from 45.33.32.156,malicious
+Connected to MySQL server,benign
+Malware download from suspicious URL,malicious
+Accessed settings page,benign
+GET /home HTTP/1.1,benign
+XSS payload detected in comment section,malicious
+DDoS traffic detected from 5.6.7.8,malicious
+Port scanning from 45.33.32.156,malicious
+GET /home HTTP/1.1,benign
+DDoS traffic detected from 5.6.7.8,malicious
+DNS query for example.com,benign
+Suspicious access to /admin/config,malicious
+Malware download from suspicious URL,malicious
+Logged out successfully,benign
+Malware download from suspicious URL,malicious
+SQL injection attempt on /login,malicious
+User login from 192.168.0.1,benign
+Logged out successfully,benign
+User login from 192.168.0.1,benign
+Logged out successfully,benign
+Brute force detected from IP 198.51.100.23,malicious
+User login from 192.168.0.1,benign
+Ping response from 8.8.8.8,benign
+Malware download from suspicious URL,malicious
+Connected to MySQL server,benign
+XSS payload detected in comment section,malicious
+XSS payload detected in comment section,malicious
+Multiple failed SSH logins from 203.0.113.1,malicious
+SQL injection attempt on /login,malicious
+Port scanning from 45.33.32.156,malicious
+System time synchronized,benign
+System time synchronized,benign
+DDoS traffic detected from 5.6.7.8,malicious
+XSS payload detected in comment section,malicious
+Ping response from 8.8.8.8,benign
+DDoS traffic detected from 5.6.7.8,malicious
+Command injection attempt in /search,malicious
+Logged out successfully,benign
+Brute force detected from IP 198.51.100.23,malicious
+DNS query for example.com,benign
+User login from 192.168.0.1,benign
+Brute force detected from IP 198.51.100.23,malicious
+System time synchronized,benign
+Base64 encoded payload detected,malicious
+Multiple failed SSH logins from 203.0.113.1,malicious
+SSH login from internal IP 10.0.0.5,benign
+Command injection attempt in /search,malicious
+SQL injection attempt on /login,malicious
+User login from 192.168.0.1,benign
+Accessed settings page,benign
+Connected to MySQL server,benign
+System time synchronized,benign
+Suspicious access to /admin/config,malicious
+DDoS traffic detected from 5.6.7.8,malicious
+DNS query for example.com,benign
+Brute force detected from IP 198.51.100.23,malicious
+SSH login from internal IP 10.0.0.5,benign
+Command injection attempt in /search,malicious
+Suspicious access to /admin/config,malicious
+Suspicious access to /admin/config,malicious
+Connected to MySQL server,benign
+SQL injection attempt on /login,malicious
+Suspicious access to /admin/config,malicious
+Port scanning from 45.33.32.156,malicious
+Logged out successfully,benign
+DDoS traffic detected from 5.6.7.8,malicious
+Ping response from 8.8.8.8,benign
+Command injection attempt in /search,malicious
+User login from 192.168.0.1,benign
+GET /home HTTP/1.1,benign
+Accessed settings page,benign
+DNS query for example.com,benign
+SQL injection attempt on /login,malicious
+Ping response from 8.8.8.8,benign
+GET /home HTTP/1.1,benign
+Brute force detected from IP 198.51.100.23,malicious
+System time synchronized,benign
+Suspicious access to /admin/config,malicious
+Ping response from 8.8.8.8,benign
+DDoS traffic detected from 5.6.7.8,malicious
+Accessed settings page,benign
+Port scanning from 45.33.32.156,malicious
+SQL injection attempt on /login,malicious
+System time synchronized,benign
+Ping response from 8.8.8.8,benign
+Ping response from 8.8.8.8,benign
+GET /home HTTP/1.1,benign
+GET /home HTTP/1.1,benign
+Malware download from suspicious URL,malicious
+GET /home HTTP/1.1,benign
