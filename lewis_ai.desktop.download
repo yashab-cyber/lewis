@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=LEWIS AI Assistant
+Comment=Advanced Cybersecurity Tool
+Exec=python3 /home/user/lewis/lewis_gui.py
+Icon=/home/user/lewis/components/lewis_icon.png
+Terminal=false
+Type=Application
+Categories=Utility;Security;AI;

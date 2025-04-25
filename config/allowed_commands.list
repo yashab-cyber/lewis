@@ -1,0 +1,103 @@
+# --- SYSTEM INFORMATION ---
+whoami
+uptime
+hostname
+uname -a
+lsb_release -a
+df -h
+free -m
+top -b -n 1
+htop
+vmstat
+lscpu
+lsblk
+dmesg | tail -n 30
+
+# --- NETWORKING ---
+ifconfig
+ip a
+ip r
+netstat -tulnp
+ss -tulwn
+ping -c 4 8.8.8.8
+traceroute google.com
+dig google.com
+host google.com
+arp -a
+iwconfig
+nmcli dev status
+curl ifconfig.me
+wget -qO- ifconfig.me
+
+# --- FILE SYSTEM ---
+ls -la
+du -sh *
+find / -type f -size +100M
+cat /etc/passwd
+cat /etc/shadow
+cat /etc/hosts
+nano /etc/hosts
+grep -i "error" /var/log/syslog
+tail -f /var/log/auth.log
+tree -L 2
+
+# --- USER MANAGEMENT ---
+id
+who
+w
+last
+users
+groups
+adduser testuser
+passwd testuser
+
+# --- PACKAGE MANAGEMENT ---
+apt update
+apt upgrade -y
+dpkg -l
+snap list
+which nmap
+whereis python3
+
+# --- ETHICAL HACKING TOOLS ---
+nmap
+nikto
+msfconsole
+hydra
+sqlmap
+airmon-ng
+airodump-ng
+aircrack-ng
+tcpdump -i any
+ettercap -G
+netdiscover
+recon-ng
+dnsenum
+theharvester
+searchsploit
+whatweb
+wpscan
+dirb
+dirbuster
+burpsuite
+john --list=formats
+
+# --- SCRIPTS & AUTOMATION ---
+bash lewis.sh
+python3 lewis-cli.py -q "whoami"
+chmod +x script.sh
+crontab -l
+crontab -e
+
+# --- MONITORING / SECURITY ---
+chkrootkit
+rkhunter --check
+auditctl -l
+journalctl -xe
+ufw status
+iptables -L
+fail2ban-client status
+
+# --- Windows cmd ----
+dir
+cls

@@ -1,0 +1,190 @@
+[2025-04-17 02:44:42.145201] Command: dir
+Output:
+ Volume in drive C is OS
+ Volume Serial Number is 4858-5E7E
+
+ Directory of C:\Users\Faiz Abdi\Desktop\lewis
+
+17-04-2025  02:14    <DIR>          .
+17-04-2025  02:14    <DIR>          ..
+05-04-2025  23:58    <DIR>          config
+06-04-2025  18:40    <DIR>          core
+06-04-2025  00:03    <DIR>          database
+05-04-2025  23:51    <DIR>          datasets
+05-04-2025  23:48               680 Dockerfile
+06-04-2025  00:29             2,629 documents.pdf
+11-04-2025  23:46             1,051 install_lewis.sh
+17-04-2025  00:50             4,598 lewis-cli.py
+17-04-2025  02:40               654 lewis_ai.log
+17-04-2025  01:21               664 lewis_cli.log
+06-04-2025  19:18    <DIR>          logs
+17-04-2025  02:38             2,698 main.py
+09-04-2025  01:53    <DIR>          ml_models
+06-04-2025  18:52                 0 python
+06-04-2025  00:24               221 requirements.txt
+06-04-2025  00:12    <DIR>          scripts
+09-04-2025  01:53    <DIR>          security_tools
+05-04-2025  23:38    <DIR>          web-ui
+               9 File(s)         13,195 bytes
+              11 Dir(s)  18,197,016,576 bytes free
+
+============================================================
+[2025-04-17 02:45:29.340634] Command: cls
+Output:
+
+============================================================
+[2025-04-17 02:45:48.241109] Command: dir
+Output:
+ Volume in drive C is OS
+ Volume Serial Number is 4858-5E7E
+
+ Directory of C:\Users\Faiz Abdi\Desktop\lewis
+
+17-04-2025  02:14    <DIR>          .
+17-04-2025  02:14    <DIR>          ..
+05-04-2025  23:58    <DIR>          config
+06-04-2025  18:40    <DIR>          core
+06-04-2025  00:03    <DIR>          database
+05-04-2025  23:51    <DIR>          datasets
+05-04-2025  23:48               680 Dockerfile
+06-04-2025  00:29             2,629 documents.pdf
+11-04-2025  23:46             1,051 install_lewis.sh
+17-04-2025  00:50             4,598 lewis-cli.py
+17-04-2025  02:40               654 lewis_ai.log
+17-04-2025  01:21               664 lewis_cli.log
+17-04-2025  02:44    <DIR>          logs
+17-04-2025  02:38             2,698 main.py
+09-04-2025  01:53    <DIR>          ml_models
+06-04-2025  18:52                 0 python
+06-04-2025  00:24               221 requirements.txt
+06-04-2025  00:12    <DIR>          scripts
+09-04-2025  01:53    <DIR>          security_tools
+05-04-2025  23:38    <DIR>          web-ui
+               9 File(s)         13,195 bytes
+              11 Dir(s)  18,196,938,752 bytes free
+
+============================================================
+[2025-04-24 01:53:11.841360] Command: dir
+Output:
+ Volume in drive C is OS
+ Volume Serial Number is 4858-5E7E
+
+ Directory of C:\Users\Faiz Abdi\Desktop\lewis
+
+23-04-2025  23:31    <DIR>          .
+23-04-2025  23:31    <DIR>          ..
+23-04-2025  23:36    <DIR>          .git
+23-04-2025  23:31    <DIR>          components
+23-04-2025  23:31    <DIR>          config
+24-04-2025  01:12    <DIR>          core
+23-04-2025  23:31    <DIR>          data
+23-04-2025  23:31    <DIR>          database
+23-04-2025  23:31    <DIR>          datasets
+23-04-2025  09:10               680 Dockerfile
+23-04-2025  09:10             2,629 documents.pdf
+23-04-2025  10:14             4,127 first_time_setup.py
+23-04-2025  10:34             2,079 install.sh
+23-04-2025  09:10             4,609 lewis-cli.py
+23-04-2025  09:53               230 lewis_ai.desktop.download
+24-04-2025  01:02            20,906 lewis_ai.log
+23-04-2025  09:10               664 lewis_cli.log
+23-04-2025  23:31    <DIR>          lewis_cyber_law_audit
+24-04-2025  01:50             5,628 lewis_gui.py
+23-04-2025  09:10            35,149 LICENSE
+23-04-2025  23:31    <DIR>          logs
+24-04-2025  00:54             3,501 main.py
+23-04-2025  23:31    <DIR>          ml_models
+23-04-2025  09:10                 0 python
+23-04-2025  09:10             1,851 README.md
+23-04-2025  11:44               237 requirements.txt
+23-04-2025  23:31    <DIR>          scripts
+23-04-2025  23:31    <DIR>          security_tools
+23-04-2025  23:31    <DIR>          web-ui
+              14 File(s)         82,290 bytes
+              15 Dir(s)  21,309,579,264 bytes free
+
+============================================================
+[2025-04-24 02:02:53.126152] Command: cls
+Output:
+
+============================================================
+[2025-04-24 02:38:23.139233] Command: dir
+Output:
+ Volume in drive C is OS
+ Volume Serial Number is 4858-5E7E
+
+ Directory of C:\Users\Faiz Abdi\Desktop\lewis
+
+23-04-2025  23:31    <DIR>          .
+23-04-2025  23:31    <DIR>          ..
+23-04-2025  23:36    <DIR>          .git
+23-04-2025  23:31    <DIR>          components
+23-04-2025  23:31    <DIR>          config
+24-04-2025  01:12    <DIR>          core
+23-04-2025  23:31    <DIR>          data
+23-04-2025  23:31    <DIR>          database
+23-04-2025  23:31    <DIR>          datasets
+23-04-2025  09:10               680 Dockerfile
+23-04-2025  09:10             2,629 documents.pdf
+23-04-2025  10:14             4,127 first_time_setup.py
+23-04-2025  10:34             2,079 install.sh
+23-04-2025  09:10             4,609 lewis-cli.py
+23-04-2025  09:53               230 lewis_ai.desktop.download
+24-04-2025  01:58            21,562 lewis_ai.log
+23-04-2025  09:10               664 lewis_cli.log
+23-04-2025  23:31    <DIR>          lewis_cyber_law_audit
+24-04-2025  01:50             5,628 lewis_gui.py
+23-04-2025  09:10            35,149 LICENSE
+23-04-2025  23:31    <DIR>          logs
+24-04-2025  00:54             3,501 main.py
+23-04-2025  23:31    <DIR>          ml_models
+23-04-2025  09:10                 0 python
+23-04-2025  09:10             1,851 README.md
+23-04-2025  11:44               237 requirements.txt
+23-04-2025  23:31    <DIR>          scripts
+23-04-2025  23:31    <DIR>          security_tools
+23-04-2025  23:31    <DIR>          web-ui
+              14 File(s)         82,946 bytes
+              15 Dir(s)  21,256,724,480 bytes free
+
+============================================================
+[2025-04-24 11:42:19.106108] Command: dir
+Output:
+ Volume in drive C is OS
+ Volume Serial Number is 4858-5E7E
+
+ Directory of C:\Users\Faiz Abdi\Desktop\lewis
+
+23-04-2025  23:31    <DIR>          .
+23-04-2025  23:31    <DIR>          ..
+23-04-2025  23:36    <DIR>          .git
+23-04-2025  23:31    <DIR>          components
+23-04-2025  23:31    <DIR>          config
+24-04-2025  01:12    <DIR>          core
+23-04-2025  23:31    <DIR>          data
+23-04-2025  23:31    <DIR>          database
+23-04-2025  23:31    <DIR>          datasets
+23-04-2025  09:10               680 Dockerfile
+23-04-2025  09:10             2,629 documents.pdf
+23-04-2025  10:14             4,127 first_time_setup.py
+23-04-2025  10:34             2,079 install.sh
+23-04-2025  09:10             4,609 lewis-cli.py
+23-04-2025  09:53               230 lewis_ai.desktop.download
+24-04-2025  02:36            21,890 lewis_ai.log
+23-04-2025  09:10               664 lewis_cli.log
+23-04-2025  23:31    <DIR>          lewis_cyber_law_audit
+24-04-2025  01:50             5,628 lewis_gui.py
+23-04-2025  09:10            35,149 LICENSE
+23-04-2025  23:31    <DIR>          logs
+24-04-2025  00:54             3,501 main.py
+23-04-2025  23:31    <DIR>          ml_models
+23-04-2025  09:10                 0 python
+23-04-2025  09:10             1,851 README.md
+23-04-2025  11:44               237 requirements.txt
+23-04-2025  23:31    <DIR>          scripts
+23-04-2025  23:31    <DIR>          security_tools
+23-04-2025  23:31    <DIR>          web-ui
+              14 File(s)         83,274 bytes
+              15 Dir(s)  20,745,895,936 bytes free
+
+============================================================
