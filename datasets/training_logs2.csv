@@ -1,5 +1,0 @@
-log,threat_level
-"Suspicious login from unknown IP",High
-"Failed login attempts detected",Medium
-"User accessed sensitive data",High
-"Routine login activity",Low
