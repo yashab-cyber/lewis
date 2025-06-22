@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lewis-system
+  labels:
+    app: lewis
+    version: v1.0.0
+    component: cybersecurity-platform
+  annotations:
+    description: "LEWIS AI-Powered Cybersecurity Platform"
+    maintainer: "yashabalam707@gmail.com"
+    company: "ZehraSec"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lewis-monitoring
+  labels:
+    app: lewis
+    component: monitoring
+  annotations:
+    description: "LEWIS Monitoring and Observability"

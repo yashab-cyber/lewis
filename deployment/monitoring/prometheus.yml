@@ -1,0 +1,69 @@
+# Prometheus Configuration for LEWIS
+# Author: Yashab Alam (ZehraSec)
+# Project: LEWIS - Linux Environment Working Intelligence System
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'lewis-monitor'
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # LEWIS Application
+  - job_name: 'lewis-app'
+    static_configs:
+      - targets: ['lewis:8080']
+    metrics_path: /metrics
+    scrape_interval: 30s
+    scrape_timeout: 10s
+
+  # LEWIS API Endpoints
+  - job_name: 'lewis-api'
+    static_configs:
+      - targets: ['lewis:8080']
+    metrics_path: /api/metrics
+    scrape_interval: 30s
+
+  # Node Exporter (System Metrics)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # PostgreSQL Exporter
+  - job_name: 'postgres-exporter'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+
+  # Redis Exporter
+  - job_name: 'redis-exporter'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+
+  # Nginx Exporter
+  - job_name: 'nginx-exporter'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+
+  # Docker Exporter
+  - job_name: 'docker-exporter'
+    static_configs:
+      - targets: ['docker-exporter:9323']
+
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Grafana
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']

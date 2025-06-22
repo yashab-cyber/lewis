@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lewis-models-pvc
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: fast-ssd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lewis-logs-pvc
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: storage
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lewis-redis-pvc
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: redis
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: fast-ssd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lewis-postgresql-pvc
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: postgresql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: fast-ssd
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: lewis-service-account
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: rbac
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: lewis-role
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: rbac
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: lewis-role-binding
+  namespace: lewis-system
+  labels:
+    app: lewis
+    component: rbac
+subjects:
+- kind: ServiceAccount
+  name: lewis-service-account
+  namespace: lewis-system
+roleRef:
+  kind: Role
+  name: lewis-role
+  apiGroup: rbac.authorization.k8s.io

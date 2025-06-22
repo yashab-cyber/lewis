@@ -1,0 +1,214 @@
+# LEWIS Configuration File
+# AI/ML Settings
+ai:
+  model_name: "microsoft/DialoGPT-medium"
+  nlp_model: "en_core_web_sm"
+  max_tokens: 512
+  temperature: 0.7
+  device: "auto"  # auto, cpu, cuda
+  cache_enabled: true
+  response_timeout: 30
+
+# Database Configuration
+database:
+  type: "json"  # json, mongodb, sqlite
+  mongodb_uri: "mongodb://localhost:27017/"
+  database_name: "lewis_db"
+  json_path: "data"
+  collections:
+    users: "users"
+    logs: "execution_logs"
+    knowledge: "knowledge_base"
+    reports: "security_reports"
+    threats: "threat_events"
+    metrics: "system_metrics"
+
+# Security Settings
+security:
+  jwt_secret: "lewis-cybersecurity-ai-2025"
+  session_timeout: 3600
+  max_failed_attempts: 5
+  encryption_key: "secure-key-for-lewis"
+  allowed_ips: []
+  rate_limiting:
+    enabled: true
+    max_requests: 100
+    time_window: 60
+
+# Cybersecurity Tools Configuration
+tools:
+  nmap_path: "/usr/bin/nmap"
+  nikto_path: "/usr/bin/nikto"
+  metasploit_path: "/usr/share/metasploit-framework"
+  subfinder_path: "/usr/bin/subfinder"
+  gobuster_path: "/usr/bin/gobuster"
+  sqlmap_path: "/usr/bin/sqlmap"
+  burpsuite_path: "/opt/BurpSuiteCommunity/BurpSuiteCommunity"
+  masscan_path: "/usr/bin/masscan"
+  nuclei_path: "/usr/bin/nuclei"
+  output_dir: "outputs"
+  temp_dir: "temp"
+  timeout: 300
+  max_concurrent: 5
+
+# Voice Interface Settings
+voice:
+  enabled: false
+  model_path: "models/vosk-model-en-us-0.22"
+  sample_rate: 16000
+  chunk_size: 4096
+  wake_word: "lewis"
+  language: "en-US"
+  rate: 150
+  volume: 0.9
+  offline_mode: true
+
+# Web Interface Configuration
+web:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_enabled: true
+  ssl_enabled: false
+  ssl_cert_path: ""
+  ssl_key_path: ""
+
+# Analytics Configuration
+analytics:
+  enabled: true
+  update_interval: 60
+  retention_days: 30
+  export_format: ["json", "csv"]
+  visualization:
+    enabled: true
+    chart_theme: "dark"
+    real_time_updates: true
+
+# Threat Detection Configuration
+detection:
+  enabled: true
+  auto_response: false
+  interfaces: ["eth0", "wlan0"]
+  threat_feeds: []
+  response_threshold: "high"
+  monitoring:
+    network_traffic: true
+    system_logs: true
+    process_activity: true
+    file_changes: false
+
+# Report Generation Configuration
+reports:
+  output_dir: "outputs/reports"
+  templates_dir: "reports/templates"
+  default_format: "html"
+  include_charts: true
+  auto_cleanup: true
+  cleanup_days: 7
+  watermark: "LEWIS Security Report"
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file_path: "logs/lewis.log"
+  max_size: "10MB"
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  console_output: true
+
+# Learning Configuration
+learning:
+  enabled: true
+  model_update_frequency: "daily"
+  knowledge_sources: ["cve", "exploit-db", "github"]
+  auto_learn: true
+  feedback_learning: true
+  model_backup: true
+
+# Performance Configuration
+performance:
+  max_workers: 4
+  memory_limit: "2GB"
+  cpu_limit: 80
+  cache_size: "100MB"
+  optimization: true
+
+# Notification Configuration
+notifications:
+  enabled: true
+  email:
+    enabled: false
+    smtp_server: ""
+    smtp_port: 587
+    username: ""
+    password: ""
+    from_address: ""
+    to_addresses: []
+  webhook:
+    enabled: false
+    url: ""
+    secret: ""
+  desktop:
+    enabled: true
+  debug: false
+  secret_key: "lewis-web-secret-2025"
+  cors_origins: ["*"]
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file: "logs/lewis.log"
+  max_size: "10MB"
+  backup_count: 5
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Learning Engine Settings
+learning:
+  enabled: true
+  update_interval: 3600  # seconds
+  cve_sources:
+    - "https://cve.mitre.org/data/downloads/allitems.xml"
+  github_repos:
+    - "SecLists/SecLists"
+    - "danielmiessler/SecLists"
+  max_learning_examples: 10000
+
+# Report Generation
+reports:
+  template_dir: "templates/reports"
+  output_formats: ["pdf", "html", "json"]
+  company_logo: "assets/logo.png"
+  
+# Deployment Settings
+deployment:
+  docker_enabled: true
+  container_name: "lewis-container"
+  network_mode: "bridge"
+  restart_policy: "unless-stopped"
+
+# Extension System Configuration
+extensions:
+  enabled: true
+  auto_load: true
+  paths:
+    - "examples"
+    - "extensions"
+    - "~/.lewis/extensions"
+  extension_settings:
+    network-security-extension:
+      enabled: true
+      scan_timeout: 300
+      max_threads: 50
+      port_range: "1-65535"
+    custom-interface-extension:
+      enabled: true
+      theme: "dark"
+      refresh_interval: 5
+      max_results_per_page: 50
+  security:
+    validate_signatures: false
+    allow_unsigned: true
+    trusted_publishers: []
+  development:
+    reload_on_change: false
+    debug_extensions: false

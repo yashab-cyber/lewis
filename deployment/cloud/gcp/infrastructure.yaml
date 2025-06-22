@@ -1,0 +1,133 @@
+# Google Cloud Platform Infrastructure for LEWIS
+# Author: Yashab Alam (ZehraSec)
+# Project: LEWIS - Linux Environment Working Intelligence System
+
+# GCP Deployment Manager configuration
+imports:
+- path: templates/compute.py
+- path: templates/network.py
+- path: templates/storage.py
+
+resources:
+# VPC Network
+- name: lewis-vpc
+  type: templates/network.py
+  properties:
+    region: us-central1
+    zone: us-central1-a
+
+# Compute Engine Instance
+- name: lewis-compute
+  type: templates/compute.py
+  properties:
+    zone: us-central1-a
+    machineType: n1-standard-4
+    sourceImage: projects/ubuntu-os-cloud/global/images/family/ubuntu-2004-lts
+    diskSizeGb: 100
+    network: $(ref.lewis-vpc.selfLink)
+    tags:
+      - lewis-server
+      - http-server
+      - https-server
+
+# Cloud Storage Bucket
+- name: lewis-storage
+  type: templates/storage.py
+  properties:
+    location: US-CENTRAL1
+    storageClass: STANDARD
+
+# Load Balancer
+- name: lewis-lb
+  type: compute.v1.globalForwardingRule
+  properties:
+    IPProtocol: TCP
+    portRange: 80-80
+    target: $(ref.lewis-target-proxy.selfLink)
+
+- name: lewis-target-proxy
+  type: compute.v1.targetHttpProxy
+  properties:
+    urlMap: $(ref.lewis-url-map.selfLink)
+
+- name: lewis-url-map
+  type: compute.v1.urlMap
+  properties:
+    defaultService: $(ref.lewis-backend-service.selfLink)
+
+- name: lewis-backend-service
+  type: compute.v1.backendService
+  properties:
+    protocol: HTTP
+    backends:
+    - group: $(ref.lewis-instance-group.selfLink)
+    healthChecks:
+    - $(ref.lewis-health-check.selfLink)
+
+- name: lewis-instance-group
+  type: compute.v1.instanceGroup
+  properties:
+    zone: us-central1-a
+    instances:
+    - $(ref.lewis-compute.selfLink)
+
+- name: lewis-health-check
+  type: compute.v1.httpHealthCheck
+  properties:
+    port: 8080
+    requestPath: /health
+
+# Firewall Rules
+- name: lewis-firewall-http
+  type: compute.v1.firewall
+  properties:
+    network: $(ref.lewis-vpc.selfLink)
+    sourceRanges:
+    - 0.0.0.0/0
+    allowed:
+    - IPProtocol: TCP
+      ports:
+      - 80
+      - 443
+      - 8080
+    targetTags:
+    - lewis-server
+
+- name: lewis-firewall-ssh
+  type: compute.v1.firewall
+  properties:
+    network: $(ref.lewis-vpc.selfLink)
+    sourceRanges:
+    - 0.0.0.0/0
+    allowed:
+    - IPProtocol: TCP
+      ports:
+      - 22
+    targetTags:
+    - lewis-server
+
+# Cloud SQL Database (optional)
+- name: lewis-database
+  type: sqladmin.v1beta4.instance
+  properties:
+    databaseVersion: POSTGRES_13
+    region: us-central1
+    settings:
+      tier: db-n1-standard-1
+      dataDiskSizeGb: 100
+      dataDiskType: PD_SSD
+      backupConfiguration:
+        enabled: true
+        startTime: "03:00"
+      ipConfiguration:
+        authorizedNetworks:
+        - value: 0.0.0.0/0
+          name: "allow-all"
+
+outputs:
+- name: externalIP
+  value: $(ref.lewis-lb.IPAddress)
+- name: instanceName
+  value: $(ref.lewis-compute.name)
+- name: databaseIP
+  value: $(ref.lewis-database.ipAddresses[0].ipAddress)
