@@ -1,0 +1,51 @@
+{
+  "name": "custom-interface-extension",
+  "version": "1.0.0",
+  "description": "Custom web interface extension with advanced dashboards for LEWIS",
+  "author": "ZehraSec Team",
+  "license": "MIT",
+  "lewis_version": ">=1.0.0",
+  "main": "extension.py",
+  "dependencies": [
+    "flask>=2.2.0",
+    "flask-socketio>=5.3.0",
+    "plotly>=5.11.0",
+    "dash>=2.7.0"
+  ],
+  "permissions": [
+    "network",
+    "filesystem",
+    "web_interface"
+  ],
+  "entry_points": {
+    "interfaces": "extension.CustomInterfaceExtension",
+    "api": "api.routes"
+  },
+  "static_files": {
+    "css": "static/css/",
+    "js": "static/js/",
+    "images": "static/images/"
+  },
+  "templates": {
+    "dashboard": "templates/dashboard.html",
+    "scan_results": "templates/scan_results.html",
+    "threat_map": "templates/threat_map.html"
+  },
+  "configuration": {
+    "theme": {
+      "type": "string",
+      "default": "dark",
+      "description": "Interface theme (dark/light)"
+    },
+    "refresh_interval": {
+      "type": "integer",
+      "default": 5,
+      "description": "Dashboard refresh interval in seconds"
+    },
+    "max_results_per_page": {
+      "type": "integer",
+      "default": 50,
+      "description": "Maximum results to display per page"
+    }
+  }
+}

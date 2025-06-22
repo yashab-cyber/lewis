@@ -1,0 +1,76 @@
+# Custom Interface Extension Configuration
+# Advanced web interface settings for LEWIS
+
+custom_interface:
+  # Theme configuration
+  theme: "dark"  # dark, light, auto
+  
+  # Performance settings
+  refresh_interval: 5  # seconds
+  max_results_per_page: 50
+  auto_refresh: true
+  
+  # Chart settings
+  charts:
+    enabled: true
+    animation: true
+    real_time: true
+    update_interval: 2  # seconds
+    max_data_points: 100
+    
+  # Map settings
+  maps:
+    provider: "openstreetmap"  # openstreetmap, mapbox, google
+    default_zoom: 10
+    max_zoom: 18
+    cluster_threshold: 10
+    heatmap:
+      enabled: true
+      radius: 25
+      blur: 15
+      max_intensity: 1.0
+    
+  # Notification settings
+  notifications:
+    desktop: true
+    sound: false
+    severity_threshold: "medium"  # info, low, medium, high, critical
+    max_notifications: 10
+    
+  # Dashboard widgets
+  dashboard:
+    widgets:
+      system_overview: true
+      resource_usage: true
+      network_activity: true
+      recent_activities: true
+      threat_map: true
+      quick_actions: true
+    layout: "grid"  # grid, list, compact
+    
+  # API settings
+  api:
+    rate_limit: 1000  # requests per hour
+    cache_ttl: 300  # seconds
+    enable_cors: true
+    
+  # Security settings
+  security:
+    session_timeout: 3600  # seconds
+    max_login_attempts: 5
+    enable_2fa: false
+    csrf_protection: true
+    
+  # Export settings
+  export:
+    formats: ["json", "csv", "pdf", "xml"]
+    max_records: 10000
+    compression: true
+    
+  # Advanced features
+  features:
+    real_time_scanning: true
+    automated_remediation: false
+    machine_learning: true
+    threat_intelligence: true
+    custom_rules: true

@@ -1,0 +1,42 @@
+{
+  "name": "network-security-extension",
+  "version": "1.0.0",
+  "description": "Advanced network security scanning and analysis extension for LEWIS",
+  "author": "ZehraSec Team",
+  "license": "MIT",
+  "lewis_version": ">=1.0.0",
+  "main": "extension.py",
+  "dependencies": [
+    "python-nmap>=0.7.1",
+    "scapy>=2.4.5",
+    "cryptography>=3.4.8",
+    "dnspython>=2.1.0",
+    "requests>=2.28.0"
+  ],
+  "permissions": [
+    "network",
+    "filesystem",
+    "system"
+  ],
+  "entry_points": {
+    "commands": "commands.network_commands",
+    "tools": "tools.network_tools"
+  },
+  "configuration": {
+    "scan_timeout": {
+      "type": "integer",
+      "default": 300,
+      "description": "Default scan timeout in seconds"
+    },
+    "max_threads": {
+      "type": "integer",
+      "default": 50,
+      "description": "Maximum number of scanning threads"
+    },
+    "port_range": {
+      "type": "string",
+      "default": "1-1000",
+      "description": "Default port range for scanning"
+    }
+  }
+}

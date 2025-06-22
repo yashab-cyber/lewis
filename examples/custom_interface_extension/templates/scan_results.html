@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ theme|default('dark') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEWIS - Scan Results</title>
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>🔍 LEWIS Scan Results</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="btn-control">🌓</button>
+                <button id="export-results" class="btn-control">📊</button>
+                <button id="refresh-results" class="btn-control">🔄</button>
+                <a href="/custom/dashboard" class="btn-control">🏠</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="scan-results-main">
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label for="scan-type">Scan Type:</label>
+                <select id="scan-type" class="filter-select">
+                    <option value="all">All Scans</option>
+                    <option value="network">Network Scan</option>
+                    <option value="vulnerability">Vulnerability Scan</option>
+                    <option value="port">Port Scan</option>
+                    <option value="web">Web Application Scan</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="severity">Severity:</label>
+                <select id="severity" class="filter-select">
+                    <option value="all">All Severities</option>
+                    <option value="critical">Critical</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                    <option value="info">Info</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="date-range">Date Range:</label>
+                <select id="date-range" class="filter-select">
+                    <option value="today">Today</option>
+                    <option value="week">Last Week</option>
+                    <option value="month">Last Month</option>
+                    <option value="custom">Custom Range</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <input type="text" id="search-box" placeholder="Search results..." class="search-input">
+            </div>
+        </div>
+
+        <!-- Results Summary -->
+        <div class="results-summary">
+            <div class="summary-card critical">
+                <div class="summary-icon">🔴</div>
+                <div class="summary-content">
+                    <div class="summary-number" id="critical-count">0</div>
+                    <div class="summary-label">Critical</div>
+                </div>
+            </div>
+            
+            <div class="summary-card high">
+                <div class="summary-icon">🟠</div>
+                <div class="summary-content">
+                    <div class="summary-number" id="high-count">0</div>
+                    <div class="summary-label">High</div>
+                </div>
+            </div>
+            
+            <div class="summary-card medium">
+                <div class="summary-icon">🟡</div>
+                <div class="summary-content">
+                    <div class="summary-number" id="medium-count">0</div>
+                    <div class="summary-label">Medium</div>
+                </div>
+            </div>
+            
+            <div class="summary-card low">
+                <div class="summary-icon">🟢</div>
+                <div class="summary-content">
+                    <div class="summary-number" id="low-count">0</div>
+                    <div class="summary-label">Low</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Table -->
+        <div class="results-container">
+            <div class="results-header">
+                <h2>Scan Results</h2>
+                <div class="results-controls">
+                    <button id="select-all" class="btn-secondary">Select All</button>
+                    <button id="export-selected" class="btn-primary">Export Selected</button>
+                    <button id="remediate-selected" class="btn-warning">Remediate</button>
+                </div>
+            </div>
+            
+            <div class="results-table-container">
+                <table class="results-table" id="results-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="header-checkbox"></th>
+                            <th class="sortable" data-sort="timestamp">Date/Time</th>
+                            <th class="sortable" data-sort="target">Target</th>
+                            <th class="sortable" data-sort="type">Scan Type</th>
+                            <th class="sortable" data-sort="severity">Severity</th>
+                            <th class="sortable" data-sort="finding">Finding</th>
+                            <th class="sortable" data-sort="status">Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <!-- Results will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button id="prev-page" class="btn-pagination">← Previous</button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-page" class="btn-pagination">Next →</button>
+            </div>
+        </div>
+
+        <!-- Result Details Modal -->
+        <div id="result-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Result Details</h3>
+                    <span class="modal-close">&times;</span>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Details will be populated by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" id="modal-close-btn">Close</button>
+                    <button class="btn-primary" id="modal-export-btn">Export</button>
+                    <button class="btn-warning" id="modal-remediate-btn">Remediate</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/dashboard.js"></script>
+    <script type="application/json" id="scan-config">
+        {
+            "theme": "{{ theme|default('dark') }}",
+            "resultsPerPage": {{ results_per_page|default(25) }},
+            "autoRefresh": {{ auto_refresh|default(true)|lower }},
+            "refreshInterval": {{ refresh_interval|default(30) }}
+        }
+    </script>
+    <script type="text/javascript">
+        // Initialize scan results interface
+        const configElement = document.getElementById('scan-config');
+        const scanConfig = JSON.parse(configElement.textContent);
+        
+        // Initialize scan results manager
+        const scanResults = new ScanResultsManager(scanConfig);
+        scanResults.initialize();
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+Source: lewis
+Section: net
+Priority: optional
+Maintainer: Yashab Alam <yashabalam707@gmail.com>
+Build-Depends: debhelper (>= 12), dh-python, python3-all, python3-setuptools, python3-dev
+Standards-Version: 4.5.1
+Homepage: https://github.com/ZehraSec/LEWIS
+Vcs-Git: https://github.com/ZehraSec/LEWIS.git
+Vcs-Browser: https://github.com/ZehraSec/LEWIS
+
+Package: lewis
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, 
+ python3 (>= 3.8),
+ python3-flask,
+ python3-sqlalchemy,
+ python3-redis,
+ python3-celery,
+ python3-requests,
+ python3-cryptography,
+ python3-jwt,
+ python3-werkzeug,
+ python3-jinja2,
+ python3-click,
+ python3-marshmallow,
+ python3-psycopg2,
+ python3-gunicorn,
+ redis-server,
+ postgresql-client
+Recommends: postgresql-server, nginx
+Suggests: docker.io, docker-compose
+Description: Linux Environment Working Intelligence System
+ LEWIS is an advanced cybersecurity platform that provides comprehensive
+ web intelligence and security analysis capabilities. It includes features
+ for threat detection, vulnerability assessment, security monitoring,
+ and automated response systems.
+ .
+ Key features include:
+  * Real-time threat detection and analysis
+  * Comprehensive vulnerability scanning
+  * Advanced security monitoring dashboard
+  * Automated incident response capabilities
+  * Machine learning-powered threat intelligence
+  * Extensible plugin architecture
+  * RESTful API for integration
+  * Multi-tenant architecture support
+ .
+ This package provides the complete LEWIS platform including the web
+ interface, API server, background workers, and command-line tools.
+
+Package: lewis-server
+Architecture: all
+Depends: lewis (= ${binary:Version}), ${misc:Depends}
+Description: LEWIS server components
+ This package provides the server components for LEWIS including
+ the web server, API endpoints, and background processing services.
+
+Package: lewis-client
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, python3-requests
+Description: LEWIS client tools and libraries
+ Command-line tools and Python libraries for interacting with LEWIS
+ servers. Includes CLI utilities for managing LEWIS deployments and
+ Python SDK for building custom integrations.
+
+Package: lewis-dev
+Architecture: all
+Depends: lewis (= ${binary:Version}), ${misc:Depends},
+ python3-pytest,
+ python3-coverage,
+ python3-flake8,
+ python3-black,
+ python3-isort
+Description: LEWIS development tools
+ Development tools and dependencies for LEWIS development including
+ testing frameworks, code quality tools, and development utilities.

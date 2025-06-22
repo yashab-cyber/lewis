@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+# LEWIS Debian Rules File
+# Author: Yashab Alam (ZehraSec)
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf build/
+	rm -rf *.egg-info/
+	find . -name "*.pyc" -delete
+	find . -name "__pycache__" -type d -exec rm -rf {} +
+
+override_dh_auto_build:
+	dh_auto_build
+	# Build documentation if needed
+	# make -C docs html
+
+override_dh_auto_install:
+	dh_auto_install
+	
+	# Install configuration files
+	install -d debian/lewis/etc/lewis
+	install -m 644 config/lewis.conf.example debian/lewis/etc/lewis/lewis.conf
+	
+	# Install systemd service files
+	install -d debian/lewis/lib/systemd/system
+	install -m 644 templates/lewis.service.template debian/lewis/lib/systemd/system/lewis.service
+	
+	# Install log directories
+	install -d debian/lewis/var/log/lewis
+	install -d debian/lewis/var/lib/lewis
+	
+	# Install nginx configuration
+	install -d debian/lewis/etc/nginx/sites-available
+	install -m 644 deployment/configs/nginx.conf debian/lewis/etc/nginx/sites-available/lewis
+	
+	# Install static files
+	install -d debian/lewis/opt/lewis/static
+	cp -r static/* debian/lewis/opt/lewis/static/
+	
+	# Install documentation
+	install -d debian/lewis/usr/share/doc/lewis
+	install -m 644 README.md debian/lewis/usr/share/doc/lewis/
+	install -m 644 CHANGELOG.md debian/lewis/usr/share/doc/lewis/
+	install -m 644 LICENSE debian/lewis/usr/share/doc/lewis/
+
+override_dh_installinit:
+	dh_installinit --name=lewis
+
+override_dh_systemd_enable:
+	dh_systemd_enable --name=lewis
+
+override_dh_systemd_start:
+	dh_systemd_start --name=lewis
+
+override_dh_fixperms:
+	dh_fixperms
+	# Set specific permissions for LEWIS directories
+	chmod 750 debian/lewis/var/log/lewis
+	chmod 750 debian/lewis/var/lib/lewis
+	chmod 600 debian/lewis/etc/lewis/lewis.conf

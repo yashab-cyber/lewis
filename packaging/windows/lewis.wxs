@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LEWIS Windows Installer Configuration -->
+<!-- Author: Yashab Alam (ZehraSec) -->
+<!-- Project: LEWIS - Linux Environment Working Intelligence System -->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           Name="LEWIS - Linux Environment Working Intelligence System" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="ZehraSec" 
+           UpgradeCode="12345678-1234-1234-1234-123456789012">
+    
+    <Package InstallerVersion="500" 
+             Compressed="yes" 
+             InstallScope="perMachine" 
+             Description="LEWIS Cybersecurity Platform Installer"
+             Comments="Advanced cybersecurity platform for threat detection and security analysis"
+             Manufacturer="ZehraSec"
+             Keywords="cybersecurity,security,threat detection,LEWIS,ZehraSec" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Feature definitions -->
+    <Feature Id="ProductFeature" Title="LEWIS Core" Level="1" Description="Core LEWIS platform components">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+    
+    <Feature Id="ServerFeature" Title="LEWIS Server" Level="1" Description="Server components and services">
+      <ComponentGroupRef Id="ServerComponents" />
+    </Feature>
+    
+    <Feature Id="ClientFeature" Title="LEWIS Client Tools" Level="2" Description="Command-line tools and client libraries">
+      <ComponentGroupRef Id="ClientComponents" />
+    </Feature>
+    
+    <Feature Id="DocumentationFeature" Title="Documentation" Level="2" Description="User guides and technical documentation">
+      <ComponentGroupRef Id="DocumentationComponents" />
+    </Feature>
+
+    <!-- Installation directory structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="ZehraSecFolder" Name="ZehraSec">
+          <Directory Id="INSTALLFOLDER" Name="LEWIS">
+            <Directory Id="BinFolder" Name="bin" />
+            <Directory Id="ConfigFolder" Name="config" />
+            <Directory Id="DataFolder" Name="data" />
+            <Directory Id="LogsFolder" Name="logs" />
+            <Directory Id="StaticFolder" Name="static" />
+            <Directory Id="TemplatesFolder" Name="templates" />
+          </Directory>
+        </Directory>
+      </Directory>
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="LEWIS" />
+      </Directory>
+      
+      <Directory Id="DesktopFolder" Name="Desktop" />
+      
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="LEWISDataFolder" Name="LEWIS">
+          <Directory Id="LEWISConfigFolder" Name="config" />
+          <Directory Id="LEWISLogsFolder" Name="logs" />
+          <Directory Id="LEWISCacheFolder" Name="cache" />
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Product components -->
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="MainExecutable" Guid="*">
+        <File Id="LEWISExe" Source="$(var.SourceDir)\lewis.exe" KeyPath="yes" />
+      </Component>
+      
+      <Component Id="PythonRuntime" Guid="*">
+        <File Id="PythonDLL" Source="$(var.SourceDir)\python39.dll" KeyPath="yes" />
+      </Component>
+      
+      <Component Id="CoreLibraries" Guid="*">
+        <File Id="CoreLib" Source="$(var.SourceDir)\lib\lewis_core.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Server components -->
+    <ComponentGroup Id="ServerComponents" Directory="INSTALLFOLDER">
+      <Component Id="ServerService" Guid="*">
+        <File Id="ServerExe" Source="$(var.SourceDir)\lewis-server.exe" KeyPath="yes" />
+        
+        <ServiceInstall Id="LEWISService"
+                        Type="ownProcess"
+                        Name="LEWIS"
+                        DisplayName="LEWIS Cybersecurity Platform"
+                        Description="LEWIS Linux Environment Working Intelligence System"
+                        Start="auto"
+                        Account="LocalSystem"
+                        ErrorControl="normal"
+                        Interactive="no">
+          <ServiceDependency Id="HTTP" />
+        </ServiceInstall>
+        
+        <ServiceControl Id="StartLEWISService"
+                        Start="install"
+                        Stop="both"
+                        Remove="uninstall"
+                        Name="LEWIS"
+                        Wait="yes" />
+      </Component>
+      
+      <Component Id="ServerConfig" Guid="*" Directory="ConfigFolder">
+        <File Id="ServerConfigFile" Source="$(var.SourceDir)\config\server.conf" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Client components -->
+    <ComponentGroup Id="ClientComponents" Directory="INSTALLFOLDER">
+      <Component Id="ClientTools" Guid="*">
+        <File Id="ClientExe" Source="$(var.SourceDir)\lewis-cli.exe" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Documentation components -->
+    <ComponentGroup Id="DocumentationComponents" Directory="INSTALLFOLDER">
+      <Component Id="UserManual" Guid="*">
+        <File Id="UserManualPDF" Source="$(var.SourceDir)\docs\user-manual.pdf" KeyPath="yes" />
+      </Component>
+      
+      <Component Id="APIDocumentation" Guid="*">
+        <File Id="APIDocHTML" Source="$(var.SourceDir)\docs\api-reference.html" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+
+    <!-- Registry entries -->
+    <Component Id="RegistryEntries" Guid="*" Directory="INSTALLFOLDER">
+      <RegistryKey Root="HKLM" Key="SOFTWARE\ZehraSec\LEWIS">
+        <RegistryValue Type="string" Name="InstallDir" Value="[INSTALLFOLDER]" KeyPath="yes" />
+        <RegistryValue Type="string" Name="Version" Value="1.0.0" />
+        <RegistryValue Type="string" Name="Vendor" Value="ZehraSec" />
+      </RegistryKey>
+      
+      <!-- Add to PATH environment variable -->
+      <Environment Id="LEWISPath" Name="PATH" Value="[INSTALLFOLDER]bin" Permanent="no" Part="last" Action="set" System="yes" />
+    </Component>
+
+    <!-- Start Menu shortcuts -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcuts" Guid="*">
+        <Shortcut Id="LEWISShortcut"
+                  Name="LEWIS Platform"
+                  Description="Launch LEWIS Cybersecurity Platform"
+                  Target="[INSTALLFOLDER]lewis.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        
+        <Shortcut Id="LEWISConfigShortcut"
+                  Name="LEWIS Configuration"
+                  Description="Configure LEWIS Platform"
+                  Target="[INSTALLFOLDER]lewis-config.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        
+        <Shortcut Id="LEWISUninstallShortcut"
+                  Name="Uninstall LEWIS"
+                  Description="Uninstall LEWIS Platform"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\ZehraSec\LEWIS" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Desktop shortcut -->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="*">
+        <Shortcut Id="LEWISDesktopShortcut"
+                  Name="LEWIS Platform"
+                  Description="Launch LEWIS Cybersecurity Platform"
+                  Target="[INSTALLFOLDER]lewis.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RegistryValue Root="HKCU" Key="Software\ZehraSec\LEWIS" Name="desktop" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!-- Firewall exceptions -->
+    <Component Id="FirewallExceptions" Guid="*" Directory="INSTALLFOLDER">
+      <FirewallException Id="LEWISFirewall"
+                         Name="LEWIS Platform"
+                         Port="8080"
+                         Protocol="tcp"
+                         Scope="localSubnet"
+                         IgnoreFailure="yes" />
+    </Component>
+
+    <!-- Custom actions -->
+    <CustomAction Id="SetupDatabase" BinaryKey="CustomActionsBinary" DllEntry="SetupDatabase" Execute="deferred" Return="check" Impersonate="no" />
+    <CustomAction Id="ConfigureServices" BinaryKey="CustomActionsBinary" DllEntry="ConfigureServices" Execute="deferred" Return="check" Impersonate="no" />
+
+    <!-- Installation sequence -->
+    <InstallExecuteSequence>
+      <Custom Action="SetupDatabase" After="InstallFiles">NOT Installed</Custom>
+      <Custom Action="ConfigureServices" After="SetupDatabase">NOT Installed</Custom>
+    </InstallExecuteSequence>
+
+    <!-- UI customization -->
+    <UI>
+      <UIRef Id="WixUI_FeatureTree" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+      
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+
+    <!-- License agreement -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SourceDir)\LICENSE.rtf" />
+    
+    <!-- Banner and dialog images -->
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.SourceDir)\images\banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.SourceDir)\images\dialog.bmp" />
+
+    <!-- Launch application option -->
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch LEWIS Platform" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+
+    <!-- Custom action binary -->
+    <Binary Id="CustomActionsBinary" SourceFile="$(var.SourceDir)\CustomActions.dll" />
+
+    <!-- Installation conditions -->
+    <Condition Message="This application requires Windows 10 or later.">
+      <![CDATA[Installed OR (VersionNT >= 1000)]]>
+    </Condition>
+    
+    <Condition Message="Administrator privileges are required to install LEWIS.">
+      <![CDATA[Privileged]]>
+    </Condition>
+
+    <!-- Upgrade logic -->
+    <Upgrade Id="12345678-1234-1234-1234-123456789012">
+      <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND"
+                      Minimum="0.0.0" IncludeMinimum="yes"
+                      Maximum="1.0.0" IncludeMaximum="no" />
+    </Upgrade>
+
+  </Product>
+</Wix>

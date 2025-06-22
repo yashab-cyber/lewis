@@ -1,0 +1,63 @@
+# Network Security Extension Configuration
+
+network_security:
+  # Scanning Configuration
+  scan_timeout: 300                    # Default scan timeout in seconds
+  max_threads: 50                      # Maximum number of scanning threads
+  port_range: "1-65535"               # Default port range for scans
+  
+  # Service Detection
+  service_detection: true              # Enable service version detection
+  os_detection: true                   # Enable OS fingerprinting
+  vulnerability_checks: true          # Enable vulnerability scanning
+  
+  # SSL/TLS Configuration
+  ssl_analysis: true                   # Enable SSL certificate analysis
+  ssl_timeout: 30                      # SSL connection timeout
+  check_certificate_chain: true       # Validate certificate chain
+  check_cipher_suites: true          # Analyze cipher suite strength
+  
+  # Performance Monitoring
+  performance_monitoring: false       # Enable performance monitoring
+  monitoring_interval: 60            # Monitoring interval in seconds
+  bandwidth_threshold: 80             # Bandwidth utilization alert threshold
+  
+  # DNS Security
+  dns_security_checks: true          # Enable DNS security analysis
+  check_dnssec: true                 # Verify DNSSEC configuration
+  check_subdomain_takeover: true     # Check for subdomain takeover vulnerabilities
+  
+  # Packet Analysis
+  packet_capture: false              # Enable packet capture (requires privileges)
+  packet_count_limit: 1000          # Maximum packets to capture per session
+  packet_analysis_depth: "standard" # Analysis depth: basic, standard, deep
+  
+  # Logging and Output
+  detailed_logging: true             # Enable detailed logging
+  output_format: "json"              # Output format: json, xml, html
+  save_results: true                 # Save scan results to file
+  results_directory: "results/"      # Directory to save results
+  
+  # Advanced Features
+  stealth_mode: false                # Enable stealth scanning techniques
+  adaptive_timing: true              # Automatically adjust scan timing
+  load_balancing: true               # Distribute scans across multiple threads
+  
+  # Integration Settings
+  siem_integration: false            # Enable SIEM integration
+  api_endpoints:
+    vulnerability_db: "https://nvd.nist.gov/feeds/"
+    threat_intelligence: "https://api.threatintel.example.com/"
+  
+  # Security Settings
+  validate_targets: true             # Validate scan targets before execution
+  allowed_networks:                  # Whitelist of allowed target networks
+    - "192.168.0.0/16"
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+  
+  # Rate Limiting
+  rate_limiting:
+    enabled: true
+    requests_per_second: 10
+    burst_size: 50

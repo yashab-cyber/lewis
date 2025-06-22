@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ theme|default('dark') }}" data-refresh-interval="{{ refresh_interval|default(5) }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEWIS - Custom Security Dashboard</title>
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>🛡️ LEWIS Security Dashboard</h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="btn-control">🌓</button>
+                <button id="refresh-toggle" class="btn-control">⏸️</button>
+                <div class="status-indicator" id="connection-status">🟢</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="dashboard-grid">
+            <!-- System Overview -->
+            <div class="dashboard-widget overview-widget">
+                <h3>📊 System Overview</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="active-scans">0</div>
+                        <div class="metric-label">Active Scans</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="threats-detected">0</div>
+                        <div class="metric-label">Threats Detected</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="critical-alerts">0</div>
+                        <div class="metric-label">Critical Alerts</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="system-health">0%</div>
+                        <div class="metric-label">System Health</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Usage -->
+            <div class="dashboard-widget resource-widget">
+                <h3>💻 Resource Usage</h3>
+                <div class="resource-charts">
+                    <div class="resource-item">
+                        <label>CPU Usage</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="cpu-progress"></div>
+                        </div>
+                        <span id="cpu-value">0%</span>
+                    </div>
+                    <div class="resource-item">
+                        <label>Memory Usage</label>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="memory-progress"></div>
+                        </div>
+                        <span id="memory-value">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Activity -->
+            <div class="dashboard-widget network-widget">
+                <h3>🌐 Network Activity</h3>
+                <div id="network-chart"></div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="dashboard-widget activity-widget">
+                <h3>📝 Recent Activities</h3>
+                <div class="activity-list" id="activity-list">
+                    <!-- Activities will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Threat Map -->
+            <div class="dashboard-widget threat-map-widget">
+                <h3>🗺️ Threat Visualization</h3>
+                <div id="threat-map-container">
+                    <canvas id="threat-map" width="400" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-widget actions-widget">
+                <h3>⚡ Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-btn primary" onclick="startQuickScan()">
+                        🔍 Quick Scan
+                    </button>
+                    <button class="action-btn secondary" onclick="viewReports()">
+                        📊 View Reports
+                    </button>
+                    <button class="action-btn warning" onclick="emergencyStop()">
+                        🛑 Emergency Stop
+                    </button>
+                    <button class="action-btn success" onclick="exportData()">
+                        💾 Export Data
+                    </button>
+                </div>
+            </div>
+        </div>    </main>    <script src="/static/js/dashboard.js"></script>
+    <script type="application/json" id="dashboard-config">
+        {
+            "theme": "{{ theme|default('dark') }}",
+            "refreshInterval": {{ refresh_interval|default(5) }},
+            "socketUrl": "auto"
+        }
+    </script>
+    <script type="text/javascript">
+        // Initialize dashboard with configuration
+        const configElement = document.getElementById('dashboard-config');
+        const dashboardConfig = JSON.parse(configElement.textContent);
+        dashboardConfig.socketUrl = window.location.origin;
+        
+        // Start dashboard
+        initializeDashboard(dashboardConfig);
+    </script>
+</body>
+</html>

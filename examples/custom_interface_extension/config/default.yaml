@@ -1,0 +1,49 @@
+# Custom Interface Extension Configuration
+
+# Interface Settings
+theme: "dark"
+refresh_interval: 5  # seconds
+max_results_per_page: 50
+
+# Dashboard Configuration
+dashboard:
+  title: "LEWIS Custom Security Dashboard"
+  show_system_stats: true
+  show_threat_alerts: true
+  show_network_status: true
+  auto_refresh: true
+
+# Charts and Visualization
+charts:
+  enabled: true
+  update_interval: 10  # seconds
+  max_data_points: 100
+  chart_types:
+    - "line"
+    - "bar" 
+    - "pie"
+    - "area"
+
+# Real-time Features
+websocket:
+  enabled: true
+  heartbeat_interval: 30
+  max_connections: 100
+
+# Security
+security:
+  require_auth: true
+  session_timeout: 3600  # seconds
+  csrf_protection: true
+
+# Logging
+logging:
+  level: "INFO"
+  log_requests: true
+  log_websocket_events: false
+
+# Performance
+performance:
+  cache_static_files: true
+  compress_responses: true
+  max_request_size: "16MB"

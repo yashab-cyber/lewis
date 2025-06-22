@@ -1,0 +1,45 @@
+lewis (1.0.0-1) stable; urgency=medium
+
+  * Initial release of LEWIS platform
+  * Complete cybersecurity analysis platform
+  * Real-time threat detection capabilities
+  * Advanced vulnerability scanning engine
+  * Comprehensive security monitoring dashboard
+  * Machine learning-powered threat intelligence
+  * RESTful API for system integration
+  * Multi-tenant architecture support
+  * Extensible plugin system
+  * Automated incident response features
+  * Docker containerization support
+  * Kubernetes deployment manifests
+  * Cloud deployment templates (AWS, GCP, Azure)
+  * Production-ready monitoring stack
+  * Comprehensive documentation suite
+  * Developer tools and SDK
+
+ -- Yashab Alam <yashabalam707@gmail.com>  Sun, 22 Jun 2025 12:00:00 +0000
+
+lewis (0.9.0-1) unstable; urgency=low
+
+  * Beta release with core functionality
+  * Web interface implementation
+  * API server development
+  * Basic threat detection engine
+  * Security monitoring capabilities
+  * Database integration
+  * Authentication and authorization
+  * Initial plugin architecture
+
+ -- Yashab Alam <yashabalam707@gmail.com>  Fri, 01 May 2025 10:00:00 +0000
+
+lewis (0.5.0-1) unstable; urgency=low
+
+  * Alpha release for testing
+  * Core platform architecture
+  * Basic web interface
+  * Initial API implementation
+  * Database schema design
+  * Authentication system
+  * Basic security features
+
+ -- Yashab Alam <yashabalam707@gmail.com>  Mon, 01 Mar 2025 08:00:00 +0000
