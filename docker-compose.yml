@@ -1,0 +1,138 @@
+version: '3.8'
+
+services:
+  lewis:
+    build: .
+    image: yashab/lewis:latest
+    container_name: lewis
+    ports:
+      - "8000:8000"          # Main web interface
+      - "8443:8443"          # HTTPS web interface
+      - "5000:5000"          # Custom interface extensions
+    volumes:
+      - lewis_config:/etc/lewis
+      - lewis_data:/var/lib/lewis
+      - lewis_logs:/var/log/lewis
+      - lewis_extensions:/var/lib/lewis/extensions
+      - ./outputs:/opt/lewis/outputs
+      - ./examples:/opt/lewis/examples:ro
+    environment:
+      - LEWIS_CONFIG=/etc/lewis/config.yaml
+      - LEWIS_LOG_LEVEL=INFO
+      - LEWIS_DB_HOST=mongodb
+      - LEWIS_DB_PORT=27017
+      - LEWIS_DB_NAME=lewis_db
+      - LEWIS_EXTENSIONS_ENABLED=true
+      - LEWIS_EXTENSION_PATH=/opt/lewis/examples
+      - FLASK_ENV=production
+    networks:
+      - lewis_network
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+      - redis
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  mongodb:
+    image: mongo:6.0
+    container_name: lewis_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=lewis
+      - MONGO_INITDB_ROOT_PASSWORD=lewis_password
+      - MONGO_INITDB_DATABASE=lewis_db
+    networks:
+      - lewis_network
+    restart: unless-stopped
+    command: --auth --bind_ip_all
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: lewis_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --requirepass redis_password
+    networks:
+      - lewis_network
+    restart: unless-stopped
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: lewis_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - lewis_network
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    container_name: lewis_kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - lewis_network
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+
+  nginx:
+    image: nginx:alpine
+    container_name: lewis_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - lewis_logs:/var/log/nginx
+    networks:
+      - lewis_network
+    restart: unless-stopped
+    depends_on:
+      - lewis
+
+volumes:
+  lewis_config:
+    driver: local
+  lewis_data:
+    driver: local
+  lewis_logs:
+    driver: local
+  lewis_extensions:
+    driver: local
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  redis_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+
+networks:
+  lewis_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

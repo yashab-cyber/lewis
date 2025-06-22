@@ -1,0 +1,249 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lewis"
+version = "1.0.0"
+description = "Linux Environment Working Intelligence System - AI-Powered Cybersecurity Platform"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Yashab Alam", email = "yashabalam707@gmail.com"},
+    {name = "ZehraSec", email = "contact@zehrasec.com"}
+]
+maintainers = [
+    {name = "Yashab Alam", email = "yashabalam707@gmail.com"}
+]
+keywords = [
+    "cybersecurity",
+    "ai",
+    "security-analysis", 
+    "penetration-testing",
+    "threat-detection",
+    "linux",
+    "artificial-intelligence",
+    "nlp",
+    "machine-learning"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators", 
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Environment :: Console",
+    "Environment :: Web Environment"
+]
+requires-python = ">=3.8"
+dependencies = [
+    "torch>=1.9.0",
+    "transformers>=4.20.0",
+    "sentence-transformers>=2.2.0",
+    "scikit-learn>=1.1.0",
+    "numpy>=1.21.0",
+    "pandas>=1.4.0",
+    "spacy>=3.4.0",
+    "nltk>=3.7",
+    "textblob>=0.17.1",
+    "flask>=2.2.0",
+    "flask-cors>=3.0.10",
+    "flask-socketio>=5.2.0",
+    "fastapi>=0.95.0",
+    "uvicorn>=0.20.0",
+    "pymongo>=4.0.0",
+    "sqlalchemy>=1.4.0",
+    "vosk>=0.3.42",
+    "pyaudio>=0.2.11",
+    "speech_recognition>=3.10.0",
+    "pyttsx3>=2.90",
+    "gtts>=2.3.0",
+    "pygame>=2.1.0",
+    "python-nmap>=0.7.1",
+    "requests>=2.28.0",
+    "paramiko>=2.11.0",
+    "psutil>=5.9.0",
+    "customtkinter>=5.0.0",
+    "matplotlib>=3.5.0",
+    "plotly>=5.10.0",
+    "dash>=2.6.0",
+    "seaborn>=0.11.0",
+    "pyyaml>=6.0",
+    "jinja2>=3.1.0",
+    "cryptography>=3.4.0",
+    "bcrypt>=3.2.0",
+    "pyjwt>=2.4.0",
+    "click>=8.0.0",
+    "rich>=12.0.0",
+    "loguru>=0.6.0",
+    "colorama>=0.4.4",
+    "tqdm>=4.64.0",
+    "schedule>=1.2.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=0.991",
+    "pre-commit>=2.20.0",
+    "sphinx>=5.0.0",
+    "sphinx-rtd-theme>=1.0.0"
+]
+security = [
+    "bandit>=1.7.0",
+    "safety>=2.0.0"
+]
+performance = [
+    "psutil>=5.9.0",
+    "memory-profiler>=0.60.0",
+    "py-spy>=0.3.14"
+]
+all = [
+    "lewis[dev,security,performance]"
+]
+
+[project.urls]
+Homepage = "https://github.com/yashab-cyber/lewis"
+Documentation = "https://github.com/yashab-cyber/lewis/blob/main/manual/README.md"
+Repository = "https://github.com/yashab-cyber/lewis.git"
+"Bug Tracker" = "https://github.com/yashab-cyber/lewis/issues"
+"ZehraSec" = "https://www.zehrasec.com"
+"Funding" = "https://github.com/yashab-cyber/lewis/blob/main/DONATE.md"
+
+[project.scripts]
+lewis = "lewis:main"
+lewis-cli = "lewis:cli_main"
+lewis-server = "lewis:server_main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lewis*", "core*", "ai*", "interfaces*", "tools*", "security*", "analytics*", "detection*", "voice*", "execution*", "storage*", "learning*", "reports*", "config*", "utils*"]
+exclude = ["tests*", "examples*", "scripts*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.yml", "*.json", "*.txt", "*.md", "*.html", "*.css", "*.js"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | models
+  | cache
+  | data
+)/
+'''
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--cov=lewis",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-fail-under=80"
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "security: marks tests as security tests"
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+    "vosk.*",
+    "pyaudio.*",
+    "pyttsx3.*",
+    "gtts.*",
+    "pygame.*",
+    "nmap.*",
+    "customtkinter.*"
+]
+ignore_missing_imports = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "docs/source/conf.py",
+    "old",
+    "build",
+    "dist",
+    "models",
+    "cache",
+    "data"
+]
+
+[tool.bandit]
+exclude_dirs = ["tests", "examples", "scripts"]
+skips = ["B101", "B601"]
+
+[tool.coverage.run]
+source = ["lewis", "core", "ai", "interfaces", "tools", "security", "analytics", "detection", "voice", "execution", "storage", "learning", "reports", "config", "utils"]
+omit = [
+    "*/tests/*",
+    "*/examples/*", 
+    "*/scripts/*",
+    "*/models/*",
+    "*/cache/*",
+    "*/data/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
+]

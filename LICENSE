@@ -1,0 +1,104 @@
+MIT License
+
+Copyright (c) 2025 Yashab Alam and ZehraSec
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## Additional Terms and Conditions
+
+### Educational and Authorized Use Only
+
+LEWIS (Linux Environment Working Intelligence System) is designed exclusively 
+for educational purposes and authorized security testing. By using this software, 
+you agree to:
+
+1. **Authorization Required**: Only use LEWIS on systems you own or have explicit 
+   written authorization to test.
+
+2. **Legal Compliance**: Ensure all activities comply with applicable local, 
+   state, federal, and international laws and regulations.
+
+3. **Responsible Disclosure**: Follow responsible disclosure practices for any 
+   vulnerabilities discovered using LEWIS.
+
+4. **No Malicious Use**: Never use LEWIS for unauthorized access, data theft, 
+   system damage, or any other malicious activities.
+
+### Intellectual Property Protection
+
+While LEWIS is open source under the MIT License, the following additional 
+restrictions apply to protect intellectual property and prevent misuse:
+
+1. **Reverse Engineering Prohibition**: Reverse engineering, decompiling, 
+   disassembling, or attempting to derive the source code of proprietary 
+   AI models, algorithms, or security signatures included with LEWIS for 
+   commercial purposes or to create competing products is strictly prohibited.
+
+2. **Commercial Use Restrictions**: While personal and educational use is 
+   encouraged, commercial use of LEWIS's proprietary AI models, threat 
+   intelligence feeds, or security algorithms requires explicit written 
+   permission from ZehraSec.
+
+3. **Attribution Required**: Any derivative works, modifications, or 
+   redistributions must maintain clear attribution to the original authors 
+   and ZehraSec, including all copyright notices and trademark acknowledgments.
+
+4. **No Circumvention**: Attempting to bypass, disable, or circumvent any 
+   security measures, licensing checks, or usage restrictions within LEWIS 
+   is prohibited and may constitute a violation of applicable laws.
+
+### Export Control and Legal Compliance
+
+1. **Export Regulations**: LEWIS may be subject to export control laws and 
+   regulations. Users are responsible for compliance with all applicable 
+   export control and sanctions laws.
+
+2. **Criminal Activity**: Using LEWIS for any criminal activity, including 
+   but not limited to unauthorized computer access, is strictly prohibited 
+   and may result in criminal prosecution.
+
+3. **Jurisdiction**: Any legal disputes related to this software shall be 
+   subject to the jurisdiction of the courts where ZehraSec is incorporated.
+
+### Limitation of Liability
+
+The authors, contributors, and ZehraSec shall not be held responsible for any 
+misuse of this tool. Users assume full responsibility for their actions and 
+any consequences resulting from the use of LEWIS. This includes but is not 
+limited to any damages resulting from unauthorized access, data breaches, 
+system compromises, or legal violations.
+
+### Trademark Notice
+
+"LEWIS" and "ZehraSec" are trademarks of their respective owners. Use of these 
+trademarks does not imply endorsement or affiliation unless explicitly stated.
+
+### Third-Party Components
+
+This software may include third-party components with their own licenses. 
+See the respective component documentation for license details.
+
+---
+
+**Contact Information:**
+- Author: Yashab Alam (yashabalam707@gmail.com)
+- Company: ZehraSec (https://www.zehrasec.com)
+- Repository: https://github.com/yashab-cyber/lewis
