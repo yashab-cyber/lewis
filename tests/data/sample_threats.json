@@ -1,0 +1,52 @@
+{
+  "threats": [
+    {
+      "id": "T001",
+      "name": "Brute Force Attack",
+      "description": "Multiple failed login attempts detected",
+      "severity": "high",
+      "indicators": [
+        "Failed authentication events",
+        "Multiple IPs targeting same account",
+        "High frequency login attempts"
+      ],
+      "mitigation": [
+        "Enable account lockout policies",
+        "Implement rate limiting",
+        "Use multi-factor authentication"
+      ]
+    },
+    {
+      "id": "T002", 
+      "name": "Network Reconnaissance",
+      "description": "Port scanning and network enumeration detected",
+      "severity": "medium",
+      "indicators": [
+        "Port scan patterns",
+        "Service enumeration attempts",
+        "Network mapping activities"
+      ],
+      "mitigation": [
+        "Configure firewall rules",
+        "Enable network monitoring",
+        "Implement intrusion detection"
+      ]
+    },
+    {
+      "id": "T003",
+      "name": "Privilege Escalation",
+      "description": "Unauthorized access to restricted resources",
+      "severity": "critical",
+      "indicators": [
+        "Access to system files",
+        "Execution of privileged commands", 
+        "Modification of system configuration"
+      ],
+      "mitigation": [
+        "Implement least privilege principle",
+        "Monitor privileged access",
+        "Use access control lists"
+      ]
+    }
+  ]
+}

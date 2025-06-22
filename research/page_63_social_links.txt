@@ -1,0 +1,217 @@
+SOCIAL LINKS AND COMMUNITY CONNECTIONS
+
+===================================================================
+
+This section provides important social media links and community connections for the LEWIS project, including the main developer and associated security research initiatives.
+
+MAIN DEVELOPER - YASHAB ALAM (FOUNDER & CEO OF ZEHRASEC)
+
+Yashab Alam is the visionary founder, CEO, and primary architect behind the LEWIS platform and ZehraSec cybersecurity company. You can connect with Yashab through the following social media channels:
+
+GitHub: https://github.com/yashab-cyber
+- Primary repository for LEWIS and other cybersecurity projects
+- Open-source contributions and collaborative development
+- Issue tracking and community engagement
+
+LinkedIn: https://linkedin.com/in/yashabalam
+- Professional cybersecurity background and experience
+- Industry connections and networking
+- Project updates and professional insights
+
+Instagram: https://instagram.com/yashab.alam
+- Behind-the-scenes development content
+- Personal insights into cybersecurity research
+- Visual updates on project milestones
+
+Email: yashabalam707@gmail.com
+- Professional correspondence and collaboration inquiries
+- Security research partnerships
+- Enterprise implementation consulting
+
+ZEHRASEC - PREMIER CYBERSECURITY COMPANY
+
+ZehraSec is a premier cybersecurity company specializing in AI-driven security solutions, advanced penetration testing, and cybersecurity education. Founded by industry expert Yashab Alam, ZehraSec is the driving force behind the LEWIS platform and is dedicated to advancing cybersecurity through innovative technology and open-source contributions.
+
+Website: https://www.zehrasec.com
+- Official company website and services
+- Cybersecurity solutions and consulting
+- Training and education programs
+
+GitHub: https://github.com/zehrasec
+- Collaborative security research projects
+- Open-source security tool development
+- Community-driven cybersecurity initiatives
+
+LinkedIn: https://linkedin.com/company/zehrasec
+- Professional cybersecurity research updates
+- Industry partnerships and collaborations
+- Research publication announcements
+
+Instagram: https://instagram.com/_zehrasec
+- Visual content related to cybersecurity research
+- Educational infographics and tutorials
+- Company activities and milestones
+
+Facebook: https://facebook.com/profile.php?id=61575580721849
+- Broader community outreach and education
+- Cybersecurity awareness campaigns
+- Company announcements and updates
+
+Twitter/X: https://twitter.com/zehrasec
+- Cybersecurity research insights and findings
+- Industry trend analysis and commentary
+- Community engagement and knowledge sharing
+
+WhatsApp Business: https://whatsapp.com/channel/0029Vaoa1GfKLaHlL0Kc8k1q
+- Business communications and support
+- Quick updates and announcements
+- Customer service and inquiries
+
+Discord Server: ZehraSec Community
+- Invite: https://discord.gg/zehrasec
+- Real-time community chat and support
+- Collaborative research discussions
+- LEWIS user support and feedback
+
+Educational Platforms:
+- ZehraSec Academy: https://www.zehrasec.com/training
+- OSCP Preparation: https://www.zehrasec.com/oscp
+- AI Security Workshops: https://www.zehrasec.com/ai-security
+- Community Forums: https://forum.zehrasec.com
+
+OFFICIAL PROJECT CHANNELS
+
+LEWIS Project Repository: https://github.com/yashab-cyber/lewis
+- Official project repository and source code
+- Issue tracking and bug reports
+- Contribution guidelines and development updates
+
+LEWIS Documentation: https://docs.lewis-security.com
+- Comprehensive technical documentation
+- API reference and developer guides
+- Tutorial content and examples
+
+ZehraSec Company Website: https://www.zehrasec.com
+- Official company website and services
+- LEWIS platform information and resources
+- Professional cybersecurity services
+
+PayPal Donations: https://paypal.me/yashab07
+- Support LEWIS development financially
+- Contribution to ongoing research and development
+- Community sustainability funding
+
+LEWIS Docker Hub: https://hub.docker.com/u/lewissecurity
+- Official Docker images and containers
+- Deployment resources and configurations
+- Version releases and updates
+
+Project Statistics:
+- GitHub Repository: github.com/yashab-cyber/lewis
+- License: MIT License
+- Primary Language: Python 3.8+
+- Current Version: 1.0.0
+
+ACADEMIC AND RESEARCH CONNECTIONS
+
+Research Publications:
+- Google Scholar: Search for "LEWIS cybersecurity platform"
+- arXiv: Preprint publications and research papers
+- IEEE Xplore: Conference papers and journal articles
+- ACM Digital Library: Academic publications and citations
+
+Conference Presentations:
+- RSA Conference: Annual security conference presentations
+- Black Hat/DEF CON: Security community presentations
+- BSides: Local security community events
+- Academic conferences: Research paper presentations
+
+Research Collaborations:
+- University partnerships for academic research
+- Industry research lab collaborations
+- Government research initiatives
+- International cybersecurity research networks
+
+INDUSTRY PARTNERSHIPS
+
+Security Vendor Integrations:
+- Collaborative partnerships with security tool vendors
+- Integration testing and validation
+- Joint development initiatives
+- Market expansion partnerships
+
+Consulting and Services:
+- Enterprise implementation consulting
+- Custom development services
+- Training and education programs
+- Security assessment and auditing
+
+Standards Organizations:
+- OWASP participation and contributions
+- NIST cybersecurity framework alignment
+- ISO standards compliance and certification
+- Industry working group participation
+
+COMMUNITY ENGAGEMENT GUIDELINES
+
+When engaging with the LEWIS community through social media:
+
+1. Maintain professional and respectful communication
+2. Follow platform-specific community guidelines
+3. Respect intellectual property and attribution
+4. Share constructive feedback and suggestions
+5. Support other community members
+6. Report security issues through appropriate channels
+7. Participate in collaborative development efforts
+
+CONTACT INFORMATION FOR MEDIA AND PARTNERSHIPS
+
+Media Inquiries:
+- Email: yashabalam707@gmail.com
+- ZehraSec Website Contact: https://www.zehrasec.com/contact
+- Press inquiries through official ZehraSec channels
+
+Partnership Opportunities:
+- Email: yashabalam707@gmail.com
+- LinkedIn: Message through Yashab Alam's profile
+- ZehraSec Business Inquiries: https://www.zehrasec.com/partnerships
+
+Security Vulnerability Reports:
+- Email: yashabalam707@gmail.com
+- GitHub Issues: https://github.com/yashab-cyber/lewis/issues
+- Responsible disclosure through official channels
+
+Technical Support:
+- GitHub Issues: Primary support channel
+- Discord Community: Real-time assistance
+- ZehraSec Forums: Community-driven support
+- Email: yashabalam707@gmail.com for complex issues
+
+STAY CONNECTED
+
+To stay updated with the latest LEWIS developments:
+
+1. Follow all official social media accounts
+2. Subscribe to the newsletter on the project website
+3. Watch the GitHub repository for updates
+4. Join the Discord community for real-time discussions
+5. Attend virtual meetups and webinars
+6. Participate in beta testing programs
+7. Contribute to open-source development
+
+Thank you for being part of the LEWIS community! Your engagement, feedback, and contributions help make cybersecurity more accessible and effective for everyone.
+
+HASHTAGS FOR SOCIAL MEDIA
+
+When posting about LEWIS or related cybersecurity topics, consider using these hashtags:
+
+#LEWIS #LewisSecurityPlatform #ZehraSec #YashabAlam #CybersecurityResearch #OpenSourceSecurity #AIcybersecurity #ThreatDetection #SecurityAutomation #CyberDefense #InfoSec #CyberSecurity #SecurityTools #CybersecurityCommunity #SecurityInnovation #EthicalHacking #PenetrationTesting #ZehraSecAcademy #SecurityEducation
+
+RESEARCH ACKNOWLEDGMENT
+
+This comprehensive research documentation was prepared to provide detailed technical analysis, documentation structure, and research methodology for the LEWIS platform. The documentation demonstrates ZehraSec's commitment to advancing cybersecurity knowledge and tools through comprehensive research and open-source contributions.
+
+Special recognition goes to:
+- **Yashab Alam (ZehraSec)**: Platform architecture, development, vision, and research leadership
+- **ZehraSec Team**: Ongoing development, support, and innovation
+- **Open Source Community**: Testing, feedback, and collaborative improvements

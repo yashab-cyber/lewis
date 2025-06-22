@@ -1,0 +1,43 @@
+3.2 SYSTEM COMPONENTS
+
+===================================================================
+
+The LEWIS system consists of several core components that work together to provide comprehensive cybersecurity capabilities. Each component serves specific functions while maintaining loose coupling with other system elements.
+
+CORE ENGINE
+
+The LEWIS Core Engine serves as the central orchestrator for all system operations. Key responsibilities include:
+
+Command Processing involves parsing and interpreting user commands, whether entered through natural language interfaces or traditional command-line syntax. The engine validates commands, resolves parameters, and coordinates execution across multiple components.
+
+Workflow Management handles the sequencing and coordination of complex security operations that may involve multiple tools and data sources. The engine maintains state information, handles error conditions, and ensures consistent execution of multi-step processes.
+
+Resource Management optimizes system resource utilization including CPU, memory, and network resources. The engine implements queuing mechanisms, load balancing, and resource allocation strategies to ensure optimal performance.
+
+Session Management maintains user sessions, authentication states, and personalized configurations. The engine handles concurrent users, session timeouts, and security controls.
+
+NATURAL LANGUAGE PROCESSOR
+
+The Natural Language Processor (NLP) component enables LEWIS's innovative command interface:
+
+Intent Recognition analyzes user input to determine the intended action or operation. The system maintains a comprehensive knowledge base of cybersecurity terminology and operation patterns.
+
+Entity Extraction identifies specific entities within user commands such as IP addresses, domain names, file paths, and tool parameters. The system validates entities and provides appropriate error handling for invalid or malformed inputs.
+
+Context Management maintains conversation context across multiple interactions, enabling users to build upon previous commands and maintain operational continuity.
+
+Command Generation translates recognized intents and entities into specific tool commands and system operations. The system handles parameter mapping, default value assignment, and command optimization.
+
+TOOL INTEGRATION FRAMEWORK
+
+The Tool Integration Framework provides standardized interfaces for integrating security tools:
+
+Tool Adapters provide abstracted interfaces for specific security tools, handling tool-specific command syntax, output parsing, and error handling. Adapters enable LEWIS to support a wide variety of tools without modifying core components.
+
+Data Transformation handles the conversion of tool outputs into standardized formats that can be processed by other system components. This includes parsing, normalization, and enrichment of security data.
+
+Result Aggregation combines outputs from multiple tools into comprehensive reports and dashboards. The system correlates findings, eliminates duplicates, and provides unified views of security assessments.
+
+===================================================================
+
+Page 12 of 60

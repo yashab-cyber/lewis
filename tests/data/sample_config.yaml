@@ -1,0 +1,41 @@
+# Test Configuration for LEWIS
+# This is a sample configuration file for testing purposes
+
+database:
+  mongodb_uri: "mongodb://localhost:27017/"
+  database_name: "lewis_test_db"
+  collections:
+    users: "test_users"
+    logs: "test_logs"
+    knowledge: "test_knowledge"
+    reports: "test_reports"
+
+security:
+  secret_key: "test_secret_key_do_not_use_in_production"
+  encryption_enabled: false
+  jwt_expiration: 3600
+
+logging:
+  level: "DEBUG"
+  file: "tests/logs/test.log"
+  max_size: "10MB"
+  backup_count: 3
+
+ai:
+  model_path: "models/test_model"
+  max_tokens: 1000
+  temperature: 0.7
+
+network:
+  default_scan_range: "192.168.1.0/24"
+  max_concurrent_scans: 5
+  timeout: 30
+
+threats:
+  update_interval: 3600
+  sources:
+    - "https://test.threatfeed.com/api/v1/indicators"
+  
+analysis:
+  max_file_size: "100MB"
+  supported_formats: ["txt", "log", "json", "csv"]

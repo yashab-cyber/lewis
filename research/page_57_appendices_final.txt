@@ -1,0 +1,328 @@
+APPENDIX G: API DOCUMENTATION
+
+===================================================================
+
+REST API SPECIFICATION
+
+Base URL: https://api.lewis.local/v1/
+
+Authentication:
+All API requests require authentication via API key or session token.
+
+Headers:
+- Authorization: Bearer <token>
+- Content-Type: application/json
+- Accept: application/json
+
+CORE ENDPOINTS
+
+Authentication Endpoints:
+POST /auth/login
+- Purpose: User authentication
+- Parameters: username, password, mfa_token (optional)
+- Response: access_token, refresh_token, expires_in
+
+POST /auth/logout
+- Purpose: Session termination
+- Parameters: None (uses Bearer token)
+- Response: success confirmation
+
+POST /auth/refresh
+- Purpose: Token renewal
+- Parameters: refresh_token
+- Response: new access_token, expires_in
+
+User Management Endpoints:
+GET /users
+- Purpose: List all users
+- Parameters: page, limit, search
+- Response: user list with pagination
+
+POST /users
+- Purpose: Create new user
+- Parameters: username, email, password, roles
+- Response: created user object
+
+GET /users/{id}
+- Purpose: Get user details
+- Parameters: user ID in path
+- Response: complete user object
+
+PUT /users/{id}
+- Purpose: Update user
+- Parameters: user ID in path, updated fields in body
+- Response: updated user object
+
+DELETE /users/{id}
+- Purpose: Delete user
+- Parameters: user ID in path
+- Response: deletion confirmation
+
+Security Events Endpoints:
+GET /events
+- Purpose: Retrieve security events
+- Parameters: start_date, end_date, severity, source, page, limit
+- Response: events list with metadata
+
+POST /events
+- Purpose: Create security event
+- Parameters: event object with required fields
+- Response: created event with assigned ID
+
+GET /events/{id}
+- Purpose: Get specific event
+- Parameters: event ID in path
+- Response: complete event object
+
+PUT /events/{id}
+- Purpose: Update event
+- Parameters: event ID in path, updated fields
+- Response: updated event object
+
+Threat Intelligence Endpoints:
+GET /threats
+- Purpose: List threat indicators
+- Parameters: type, confidence, tags, page, limit
+- Response: threat indicators list
+
+POST /threats
+- Purpose: Add threat indicator
+- Parameters: indicator object
+- Response: created indicator with metadata
+
+GET /threats/search
+- Purpose: Search threat indicators
+- Parameters: query, filters
+- Response: matching indicators
+
+Reports Endpoints:
+GET /reports
+- Purpose: List available reports
+- Parameters: category, date_range
+- Response: reports list with metadata
+
+POST /reports
+- Purpose: Generate new report
+- Parameters: report type, parameters, format
+- Response: report generation job ID
+
+GET /reports/{id}
+- Purpose: Get report status/content
+- Parameters: report ID in path
+- Response: report object or generation status
+
+Tools Integration Endpoints:
+GET /tools
+- Purpose: List integrated tools
+- Parameters: category, status
+- Response: tools list with connection status
+
+POST /tools/{tool_id}/execute
+- Purpose: Execute tool command
+- Parameters: tool ID, command, parameters
+- Response: execution result
+
+GET /tools/{tool_id}/status
+- Purpose: Check tool status
+- Parameters: tool ID in path
+- Response: tool status and health information
+
+WEBHOOKS AND NOTIFICATIONS
+
+Webhook Configuration:
+POST /webhooks
+- Purpose: Register webhook endpoint
+- Parameters: url, events, secret
+- Response: webhook configuration
+
+Event Types:
+- security.event.created
+- security.event.updated
+- threat.indicator.added
+- system.alert.triggered
+- report.generation.completed
+
+Webhook Payload Format:
+```json
+{
+  "event_type": "security.event.created",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "data": {
+    "event_id": "12345",
+    "severity": "high",
+    "source": "network_monitor"
+  },
+  "signature": "sha256_hash"
+}
+```
+
+APPENDIX H: DATABASE SCHEMA
+
+CORE TABLES
+
+Users Table:
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    roles JSONB
+);
+```
+
+Security Events Table:
+```sql
+CREATE TABLE security_events (
+    id SERIAL PRIMARY KEY,
+    event_type VARCHAR(50) NOT NULL,
+    severity VARCHAR(20) NOT NULL,
+    source VARCHAR(100) NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    description TEXT,
+    raw_data JSONB,
+    processed_data JSONB,
+    status VARCHAR(20) DEFAULT 'open',
+    assigned_to INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Threat Indicators Table:
+```sql
+CREATE TABLE threat_indicators (
+    id SERIAL PRIMARY KEY,
+    indicator_type VARCHAR(50) NOT NULL,
+    indicator_value VARCHAR(500) NOT NULL,
+    confidence_level INTEGER CHECK (confidence_level >= 0 AND confidence_level <= 100),
+    source VARCHAR(100) NOT NULL,
+    tags JSONB,
+    first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE
+);
+```
+
+Tools Configuration Table:
+```sql
+CREATE TABLE tools_config (
+    id SERIAL PRIMARY KEY,
+    tool_name VARCHAR(100) NOT NULL,
+    tool_type VARCHAR(50) NOT NULL,
+    connection_config JSONB NOT NULL,
+    is_enabled BOOLEAN DEFAULT TRUE,
+    last_health_check TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+Reports Table:
+```sql
+CREATE TABLE reports (
+    id SERIAL PRIMARY KEY,
+    report_name VARCHAR(200) NOT NULL,
+    report_type VARCHAR(50) NOT NULL,
+    parameters JSONB,
+    generated_by INTEGER REFERENCES users(id),
+    generation_status VARCHAR(20) DEFAULT 'pending',
+    file_path VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP
+);
+```
+
+INDEXES AND CONSTRAINTS
+
+Performance Indexes:
+```sql
+-- Security events indexes
+CREATE INDEX idx_security_events_timestamp ON security_events(timestamp);
+CREATE INDEX idx_security_events_severity ON security_events(severity);
+CREATE INDEX idx_security_events_status ON security_events(status);
+CREATE INDEX idx_security_events_source ON security_events(source);
+
+-- Threat indicators indexes
+CREATE INDEX idx_threat_indicators_type ON threat_indicators(indicator_type);
+CREATE INDEX idx_threat_indicators_value ON threat_indicators(indicator_value);
+CREATE INDEX idx_threat_indicators_active ON threat_indicators(is_active);
+
+-- Users indexes
+CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_active ON users(is_active);
+```
+
+Foreign Key Constraints:
+```sql
+-- Add foreign key relationships
+ALTER TABLE security_events 
+ADD CONSTRAINT fk_events_assigned_user 
+FOREIGN KEY (assigned_to) REFERENCES users(id);
+
+ALTER TABLE reports 
+ADD CONSTRAINT fk_reports_user 
+FOREIGN KEY (generated_by) REFERENCES users(id);
+```
+
+APPENDIX I: EXTENSION DEVELOPMENT
+
+EXTENSION FRAMEWORK
+
+Extension Structure:
+```
+extension_name/
+├── __init__.py
+├── manifest.json
+├── main.py
+├── config.yaml
+├── requirements.txt
+├── tests/
+│   ├── __init__.py
+│   └── test_main.py
+└── docs/
+    └── README.md
+```
+
+Manifest Configuration:
+```json
+{
+  "name": "extension_name",
+  "version": "1.0.0",
+  "description": "Extension description",
+  "author": "Author Name",
+  "license": "MIT",
+  "entry_point": "main.py",
+  "dependencies": ["requests", "json"],
+  "permissions": ["network", "database"],
+  "api_version": "1.0",
+  "supported_versions": [">=1.0.0"]
+}
+```
+
+Base Extension Class:
+```python
+from lewis.core.extension import BaseExtension
+
+class MyExtension(BaseExtension):
+    def __init__(self):
+        super().__init__()
+        self.name = "My Extension"
+        self.version = "1.0.0"
+    
+    def initialize(self):
+        """Initialize extension"""
+        pass
+    
+    def execute(self, command, parameters):
+        """Execute extension command"""
+        pass
+    
+    def cleanup(self):
+        """Cleanup resources"""
+        pass
+```

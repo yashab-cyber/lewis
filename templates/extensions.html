@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEWIS Extensions Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .extension-card {
+            transition: transform 0.2s;
+        }
+        .extension-card:hover {
+            transform: translateY(-5px);
+        }
+        .status-active {
+            color: #28a745;
+        }
+        .status-inactive {
+            color: #dc3545;
+        }
+        .command-badge {
+            background-color: #007bff;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin: 2px;
+        }
+        .tool-badge {
+            background-color: #6c757d;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> LEWIS Dashboard
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+                <a class="nav-link active" href="/extensions">Extensions</a>
+                <a class="nav-link" href="/tools">Tools</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-puzzle-piece"></i> Extension Manager</h2>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary" onclick="refreshExtensions()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="reloadExtensions()">
+                            <i class="fas fa-redo"></i> Reload All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extension Overview -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Extensions</h5>
+                        <h2 class="text-primary" id="total-extensions">-</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Extensions</h5>
+                        <h2 class="text-success" id="active-extensions">-</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Commands</h5>
+                        <h2 class="text-info" id="total-commands">-</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Tools</h5>
+                        <h2 class="text-warning" id="total-tools">-</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extensions List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-list"></i> Loaded Extensions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="extensions-container" class="row">
+                            <!-- Extensions will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extension Commands -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-terminal"></i> Available Extension Commands</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="commands-container">
+                            <!-- Commands will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extension Details Modal -->
+    <div class="modal fade" id="extensionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="extensionModalLabel">Extension Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="extensionModalBody">
+                    <!-- Extension details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let extensionData = {};
+
+        // Load extensions on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshExtensions();
+        });
+
+        async function refreshExtensions() {
+            try {
+                const response = await fetch('/api/extensions');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    extensionData = result.data;
+                    updateExtensionDisplay();
+                    loadExtensionCommands();
+                } else {
+                    showAlert('Failed to load extensions', 'danger');
+                }
+            } catch (error) {
+                console.error('Error loading extensions:', error);
+                showAlert('Error loading extensions: ' + error.message, 'danger');
+            }
+        }
+
+        async function reloadExtensions() {
+            try {
+                showAlert('Reloading extensions...', 'info');
+                const response = await fetch('/api/extensions/reload', {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showAlert('Extensions reloaded successfully', 'success');
+                    refreshExtensions();
+                } else {
+                    showAlert('Failed to reload extensions', 'danger');
+                }
+            } catch (error) {
+                console.error('Error reloading extensions:', error);
+                showAlert('Error reloading extensions: ' + error.message, 'danger');
+            }
+        }
+
+        function updateExtensionDisplay() {
+            const loadedExtensions = extensionData.loaded_extensions || {};
+            const container = document.getElementById('extensions-container');
+            
+            // Update overview stats
+            const totalExtensions = Object.keys(loadedExtensions).length;
+            const activeExtensions = Object.values(loadedExtensions).filter(ext => ext.active !== false).length;
+            const totalCommands = Object.values(loadedExtensions).reduce((sum, ext) => sum + (ext.commands?.length || 0), 0);
+            const totalTools = Object.values(loadedExtensions).reduce((sum, ext) => sum + (ext.tools?.length || 0), 0);
+            
+            document.getElementById('total-extensions').textContent = totalExtensions;
+            document.getElementById('active-extensions').textContent = activeExtensions;
+            document.getElementById('total-commands').textContent = totalCommands;
+            document.getElementById('total-tools').textContent = totalTools;
+            
+            // Clear container
+            container.innerHTML = '';
+            
+            if (totalExtensions === 0) {
+                container.innerHTML = '<div class="col-12"><p class="text-muted text-center">No extensions loaded</p></div>';
+                return;
+            }
+            
+            // Add extension cards
+            for (const [extName, extInfo] of Object.entries(loadedExtensions)) {
+                const card = createExtensionCard(extName, extInfo);
+                container.appendChild(card);
+            }
+        }
+
+        function createExtensionCard(name, info) {
+            const col = document.createElement('div');
+            col.className = 'col-md-6 col-lg-4 mb-3';
+            
+            const statusIcon = info.active !== false ? 'fas fa-check-circle status-active' : 'fas fa-times-circle status-inactive';
+            const statusText = info.active !== false ? 'Active' : 'Inactive';
+            
+            col.innerHTML = `
+                <div class="card extension-card h-100" onclick="showExtensionDetails('${name}')">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="card-title">${name}</h6>
+                            <i class="${statusIcon}" title="${statusText}"></i>
+                        </div>
+                        <p class="card-text text-muted small">Version: ${info.version || 'Unknown'}</p>
+                        <div class="mb-2">
+                            ${(info.commands || []).map(cmd => `<span class="command-badge">${cmd}</span>`).join('')}
+                        </div>
+                        <div>
+                            ${(info.tools || []).map(tool => `<span class="tool-badge">${tool}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted small">
+                        ${info.commands?.length || 0} commands, ${info.tools?.length || 0} tools
+                    </div>
+                </div>
+            `;
+            
+            return col;
+        }
+
+        async function loadExtensionCommands() {
+            try {
+                const response = await fetch('/api/extensions/commands');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    const commands = result.data;
+                    const container = document.getElementById('commands-container');
+                    
+                    if (Object.keys(commands).length === 0) {
+                        container.innerHTML = '<p class="text-muted">No extension commands available</p>';
+                        return;
+                    }
+                    
+                    let html = '<div class="row">';
+                    for (const [command, info] of Object.entries(commands)) {
+                        html += `
+                            <div class="col-md-6 mb-2">
+                                <div class="card">
+                                    <div class="card-body py-2">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <strong>${command}</strong>
+                                            <small class="text-muted">${info.extension}</small>
+                                        </div>
+                                        <small class="text-muted">${info.description}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    html += '</div>';
+                    
+                    container.innerHTML = html;
+                }
+            } catch (error) {
+                console.error('Error loading extension commands:', error);
+            }
+        }
+
+        function showExtensionDetails(extensionName) {
+            const info = extensionData.loaded_extensions[extensionName];
+            if (!info) return;
+            
+            const modalLabel = document.getElementById('extensionModalLabel');
+            const modalBody = document.getElementById('extensionModalBody');
+            
+            modalLabel.textContent = `${extensionName} Details`;
+            
+            modalBody.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Basic Information</h6>
+                        <p><strong>Name:</strong> ${extensionName}</p>
+                        <p><strong>Version:</strong> ${info.version || 'Unknown'}</p>
+                        <p><strong>Status:</strong> ${info.active !== false ? 'Active' : 'Inactive'}</p>
+                        <p><strong>Path:</strong> ${info.path || 'Unknown'}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Capabilities</h6>
+                        <p><strong>Commands:</strong> ${info.commands?.length || 0}</p>
+                        <p><strong>Tools:</strong> ${info.tools?.length || 0}</p>
+                    </div>
+                </div>
+                
+                ${info.commands?.length ? `
+                    <div class="mt-3">
+                        <h6>Commands</h6>
+                        <ul class="list-unstyled">
+                            ${info.commands.map(cmd => `<li><code>${cmd}</code></li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+                
+                ${info.tools?.length ? `
+                    <div class="mt-3">
+                        <h6>Tools</h6>
+                        <ul class="list-unstyled">
+                            ${info.tools.map(tool => `<li><code>${tool}</code></li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('extensionModal'));
+            modal.show();
+        }
+
+        function showAlert(message, type) {
+            const alertContainer = document.createElement('div');
+            alertContainer.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alertContainer.style.cssText = 'top: 20px; right: 20px; z-index: 9999; max-width: 300px;';
+            alertContainer.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertContainer);
+            
+            setTimeout(() => {
+                alertContainer.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

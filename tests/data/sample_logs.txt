@@ -1,0 +1,10 @@
+2024-06-21 10:15:23 [INFO] System startup initiated
+2024-06-21 10:15:24 [INFO] Database connection established
+2024-06-21 10:15:25 [WARNING] Failed login attempt from IP 192.168.1.100
+2024-06-21 10:15:26 [INFO] User admin logged in successfully
+2024-06-21 10:15:30 [ERROR] Permission denied accessing /etc/shadow
+2024-06-21 10:15:35 [INFO] Network scan initiated on 192.168.1.0/24
+2024-06-21 10:15:40 [WARNING] Suspicious network activity detected
+2024-06-21 10:15:45 [CRITICAL] Potential intrusion detected from 10.0.0.1
+2024-06-21 10:15:50 [INFO] Security alert sent to admin
+2024-06-21 10:16:00 [INFO] System scan completed

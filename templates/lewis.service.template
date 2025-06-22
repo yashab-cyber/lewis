@@ -1,0 +1,39 @@
+[Unit]
+Description=LEWIS - Linux Environment Working Intelligence System
+Documentation=https://github.com/yashab-cyber/lewis
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User={LEWIS_USER}
+Group={LEWIS_USER}
+WorkingDirectory={LEWIS_HOME}
+ExecStart={LEWIS_HOME}/venv/bin/python {LEWIS_HOME}/lewis.py --mode server
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+RestartSec=10
+KillMode=mixed
+KillSignal=SIGINT
+TimeoutStopSec=5
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths={LEWIS_HOME} {LEWIS_DATA} {LEWIS_LOGS}
+
+# Environment
+Environment=PYTHONPATH={LEWIS_HOME}
+Environment=LEWIS_CONFIG={LEWIS_CONFIG}
+Environment=LEWIS_DATA={LEWIS_DATA}
+Environment=LEWIS_LOGS={LEWIS_LOGS}
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=lewis
+
+[Install]
+WantedBy=multi-user.target

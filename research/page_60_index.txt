@@ -1,0 +1,179 @@
+INDEX
+
+===================================================================
+
+A
+Academic collaboration, 49, 50
+Access control, 32, 55
+    Attribute-based (ABAC), 55
+    Role-based (RBAC), 32, 55
+AI applications, 9, 15, 17, 50
+    Explainable AI, 50, 52, 59
+    Machine learning, 9, 36, 50
+Analytics, privacy-preserving, 34, 50, 51
+API documentation, 57
+    Authentication, 57
+    Endpoints, 57
+    REST specification, 57
+Application security, 31, 56
+Architecture, 11-14
+    Core overview, 11
+    Design principles, 13
+    Extension system, 19-22
+    Security architecture, 31
+Artificial intelligence, see AI applications
+Audit controls, 33, 56
+Authentication, 32, 55, 57
+    Multi-factor, 32, 55
+    Single sign-on, 55
+Authorization, 32, 55
+
+B
+Benchmarking, 35-38, 56
+    Methodology, 35
+    Performance metrics, 36
+    Results, 56
+Best practices, 26, 53, 59
+
+C
+Case studies, 39-42
+    Academic research, 40
+    Enterprise implementation, 39
+    Government agency, 42
+    Small business, 41
+Change management, 53
+Cloud deployment, 27
+Community growth, 49
+    Developer ecosystem, 49
+    User engagement, 49
+Compliance, 33-34, 53, 56
+    GDPR, 34, 56, 58
+    HIPAA, 33, 56, 58
+    SOX, 33, 56, 58
+Configuration, 55-56
+    Database, 55
+    Integration examples, 55
+Core functionality, 15-18
+    Natural language interface, 15
+    Report generation, 18
+    Threat detection, 17
+    Tool integration, 16
+Cybersecurity challenges, 7
+
+D
+Database schema, 57
+    Core tables, 57
+    Indexes, 57
+    Performance optimization, 55
+Deployment, 27-30, 53
+    Cloud options, 27
+    High availability, 30
+    Scalability, 29
+Design principles, 13
+Documentation standards, 26, 52
+Docker installation, 55
+
+E
+Error handling, 56
+Evaluation frameworks, 52
+Extension system, 19-22
+    Architecture, 19
+    Community contributions, 22
+    Development framework, 20, 57
+    Example extensions, 21
+
+F
+Frameworks, security, 8
+Future development, 47-50
+    Community growth, 49
+    Emerging technologies, 48
+    Research opportunities, 50
+    Roadmap, 47
+
+G
+Government compliance, 42, 58
+
+H
+High availability, 30
+Human factors, 52, 58
+
+I
+Implementation methodology, 23-26
+    Development process, 23
+    Quality assurance, 25
+    Testing strategies, 24
+Industry partnerships, 49
+Installation procedures, 55
+Integration, 16, 55
+    API compatibility, 55
+    SIEM systems, 55
+    Tool connectivity, 16
+
+L
+LEWIS platform
+    Architecture, 11-14
+    Core functionality, 15-18
+    Definition, 3
+    Goals, 5
+Literature review, 7-10
+
+M
+Machine learning, see AI applications
+Monitoring, 28, 53
+
+N
+Natural language processing, 9, 15, 50, 58
+Network configuration, 55
+
+O
+Open source, 22, 52, 58
+Optimization, performance, 28, 36, 38
+
+P
+Performance evaluation, 35-38, 56
+    Benchmarking, 35
+    Comparative analysis, 37
+    Metrics, 36
+    Optimization results, 38
+Privacy considerations, 34, 50, 51
+Problem statement, 4
+
+Q
+Quality assurance, 25, 52
+
+R
+Recommendations, 53
+References, 58-59
+Report generation, 18
+Research objectives, 5
+Research opportunities, 50
+
+S
+Scalability, 29, 30, 56
+Security, 31-34, 56
+    Architecture, 31
+    Assessment, 56
+    Compliance, 33-34
+    Privacy, 34
+SIEM integration, 55
+
+T
+Technology stack, 14
+Testing, 24, 25, 56
+    Performance, 56
+    Security, 56
+    Strategies, 24
+Threat detection, 17
+Threat intelligence, 55, 57
+Tool integration, 16, 55
+Troubleshooting, 56
+
+U
+User interface, 15
+User management, 57
+
+V
+Vulnerability assessment, 56
+
+W
+Webhooks, 57

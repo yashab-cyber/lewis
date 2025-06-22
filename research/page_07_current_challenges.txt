@@ -1,0 +1,35 @@
+2. LITERATURE REVIEW
+
+===================================================================
+
+2.1 CURRENT CYBERSECURITY CHALLENGES
+
+The cybersecurity landscape has undergone significant transformation in recent years, driven by the proliferation of cloud computing, remote work, IoT devices, and increasingly sophisticated threat actors. Understanding these challenges provides essential context for evaluating LEWIS's contributions to the field.
+
+THREAT LANDSCAPE EVOLUTION
+
+The modern threat landscape is characterized by several key trends that have fundamentally altered cybersecurity requirements:
+
+Advanced Persistent Threats (APTs) have become more prevalent and sophisticated, utilizing complex multi-stage attacks that can remain undetected for months or years. These threats require continuous monitoring and advanced analytical capabilities that exceed the capacity of traditional point solutions.
+
+Ransomware attacks have evolved from opportunistic targeting to sophisticated, targeted campaigns against specific industries and organizations. The rise of ransomware-as-a-service (RaaS) has democratized access to advanced attack capabilities, increasing the volume and sophistication of attacks.
+
+Supply chain attacks have emerged as a critical threat vector, exploiting the interconnected nature of modern software development and distribution. These attacks require comprehensive visibility across complex dependency relationships and the ability to assess risk throughout the software supply chain.
+
+Zero-day exploits are increasingly being weaponized by both criminal organizations and nation-state actors, requiring rapid detection and response capabilities that can identify previously unknown attack patterns.
+
+ORGANIZATIONAL CHALLENGES
+
+Contemporary organizations face several structural challenges in implementing effective cybersecurity programs:
+
+Skills shortage remains a critical limitation, with organizations struggling to hire and retain qualified cybersecurity professionals. This shortage is exacerbated by the rapid evolution of threats and technologies, requiring continuous learning and adaptation.
+
+Tool proliferation has created management overhead, with organizations deploying dozens of security tools that often operate in isolation. This proliferation leads to alert fatigue, inconsistent data correlation, and gaps in security coverage.
+
+Compliance complexity has increased significantly as organizations must navigate multiple regulatory frameworks simultaneously, including GDPR, HIPAA, SOX, and industry-specific requirements.
+
+Budget constraints limit the ability of many organizations to implement comprehensive security programs, requiring careful prioritization and resource allocation decisions.
+
+===================================================================
+
+Page 7 of 60
