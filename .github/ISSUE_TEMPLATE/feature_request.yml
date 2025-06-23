@@ -1,0 +1,169 @@
+name: Feature Request
+description: Suggest a new feature or enhancement for LEWIS
+title: "[FEATURE] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature! Please fill out this form to help us understand your idea.
+
+  - type: checkboxes
+    id: preliminary-checks
+    attributes:
+      label: Preliminary Checks
+      description: Please confirm you have done the following
+      options:
+        - label: I have searched existing issues and discussions for similar ideas
+          required: true
+        - label: I have checked the roadmap and upcoming features
+          required: true
+        - label: This feature would benefit the broader LEWIS community
+          required: true
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? What is the current limitation?
+      placeholder: Describe the problem or limitation you're experiencing...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution in detail
+      placeholder: Describe how you envision this feature working...
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Provide specific use cases where this feature would be valuable
+      placeholder: |
+        1. As a penetration tester, I want to...
+        2. As a security analyst, I need to...
+        3. As a researcher, I would like to...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: Feature Category
+      description: Which area of LEWIS does this feature relate to?
+      options:
+        - AI/Machine Learning
+        - User Interface (CLI/GUI/Web)
+        - Tool Integration
+        - Security/Authentication
+        - Analytics/Reporting
+        - Performance/Optimization
+        - Documentation
+        - API/Integration
+        - Voice Assistant
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority-level
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - Critical - Blocking my workflow
+        - High - Would significantly improve my workflow
+        - Medium - Nice to have improvement
+        - Low - Minor enhancement
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives-considered
+    attributes:
+      label: Alternatives Considered
+      description: What alternative solutions or workarounds have you considered?
+      placeholder: Describe any alternative approaches you've thought about...
+
+  - type: textarea
+    id: implementation-ideas
+    attributes:
+      label: Implementation Ideas
+      description: Do you have any ideas about how this could be implemented?
+      placeholder: |
+        If you have technical ideas about implementation, share them here:
+        - Technologies that could be used
+        - Architectural considerations
+        - Integration points
+        - etc.
+
+  - type: textarea
+    id: mockups-examples
+    attributes:
+      label: Mockups/Examples
+      description: Any mockups, screenshots, or examples that illustrate your idea
+      placeholder: |
+        You can attach images or provide links to examples:
+        - UI mockups
+        - Similar features in other tools
+        - Command examples
+        - etc.
+
+  - type: checkboxes
+    id: breaking-changes
+    attributes:
+      label: Breaking Changes
+      description: Consider the impact of this feature
+      options:
+        - label: This feature may require breaking changes to existing APIs
+          required: false
+        - label: This feature should maintain backward compatibility
+          required: false
+
+  - type: dropdown
+    id: target-users
+    attributes:
+      label: Target Users
+      description: Who would primarily benefit from this feature?
+      options:
+        - Penetration Testers
+        - Security Analysts
+        - Incident Response Teams
+        - Security Researchers
+        - Students/Educators
+        - Enterprise Users
+        - All Users
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any additional context, links, or information about the feature request
+      placeholder: |
+        Add any other context about the feature request here:
+        - Links to relevant resources
+        - Industry standards or compliance requirements
+        - Performance considerations
+        - Security implications
+        - etc.
+
+  - type: checkboxes
+    id: contribution-willingness
+    attributes:
+      label: Contribution
+      description: Would you be willing to help implement this feature?
+      options:
+        - label: I would be willing to work on implementing this feature
+          required: false
+        - label: I can help with testing this feature once implemented
+          required: false
+        - label: I can help with documentation for this feature
+          required: false

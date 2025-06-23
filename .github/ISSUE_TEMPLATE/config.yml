@@ -1,0 +1,21 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Community Discussion
+    url: https://github.com/yashab-cyber/lewis/discussions
+    about: Ask questions and discuss ideas with the community
+  
+  - name: 📚 Documentation
+    url: https://docs.lewis-security.com
+    about: Check the official documentation for help and guides
+  
+  - name: 🚨 Security Issues
+    url: mailto:yashabalam707@gmail.com
+    about: Report security vulnerabilities privately via email
+  
+  - name: 💰 Support Development
+    url: https://github.com/yashab-cyber/lewis/blob/main/DONATE.md
+    about: Support LEWIS development through donations
+  
+  - name: 🌐 ZehraSec Website
+    url: https://www.zehrasec.com
+    about: Visit ZehraSec's official website for cybersecurity services
