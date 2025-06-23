@@ -27,6 +27,11 @@ GITHUB_REPO="https://github.com/yashab-cyber/lewis.git"
 ZEHRASEC_WEBSITE="https://www.zehrasec.com"
 CREATOR_EMAIL="yashabalam707@gmail.com"
 
+# Python version configuration
+PYTHON_VERSION="3.11.9"
+PYENV_ROOT="/opt/pyenv"
+LEWIS_PYTHON_PATH="$PYENV_ROOT/versions/$PYTHON_VERSION/bin/python"
+
 # System detection
 detect_os() {
     if [[ -f /etc/os-release ]]; then
@@ -130,7 +135,21 @@ install_system_dependencies() {
                 espeak \
                 festival \
                 alsa-utils \
-                pulseaudio
+                pulseaudio \
+                make \
+                libreadline-dev \
+                zlib1g-dev \
+                libbz2-dev \
+                libsqlite3-dev \
+                llvm \
+                libncurses5-dev \
+                libncursesw5-dev \
+                xz-utils \
+                tk-dev \
+                libxml2-dev \
+                libxmlsec1-dev \
+                libffi-dev \
+                liblzma-dev
             ;;
         "CentOS"*|"Red Hat"*|"Rocky"*|"AlmaLinux"*)
             yum update -y
@@ -169,7 +188,19 @@ install_system_dependencies() {
                 espeak \
                 festival \
                 alsa-utils \
-                pulseaudio
+                pulseaudio \
+                make \
+                readline-devel \
+                zlib-devel \
+                bzip2-devel \
+                sqlite-devel \
+                llvm \
+                ncurses-devel \
+                xz-devel \
+                tk-devel \
+                libxml2-devel \
+                xmlsec1-devel \
+                xz-lzma-compat
             ;;
         "Arch"*|"Manjaro"*)
             pacman -Syu --noconfirm
@@ -214,7 +245,18 @@ install_system_dependencies() {
                 espeak \
                 festival \
                 alsa-utils \
-                pulseaudio
+                pulseaudio \
+                make \
+                readline \
+                zlib \
+                bzip2 \
+                sqlite \
+                llvm \
+                ncurses \
+                xz \
+                tk \
+                libxml2 \
+                xmlsec
             ;;
         *)
             echo -e "${RED}Unsupported OS: $OS${NC}"
@@ -224,6 +266,89 @@ install_system_dependencies() {
     esac
     
     echo -e "${GREEN}System dependencies installed successfully${NC}"
+}
+
+# Install and configure pyenv with Python 3.11.9
+install_pyenv_python() {
+    echo -e "${YELLOW}Installing pyenv and Python ${PYTHON_VERSION}...${NC}"
+    
+    # Check if pyenv is already installed
+    if [[ -d "$PYENV_ROOT" ]]; then
+        echo -e "${BLUE}pyenv already exists at $PYENV_ROOT${NC}"
+    else
+        # Install pyenv
+        echo -e "${BLUE}Installing pyenv...${NC}"
+        git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
+        
+        # Set up pyenv environment
+        export PYENV_ROOT="$PYENV_ROOT"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init -)"
+    fi
+    
+    # Ensure pyenv is in PATH for this session
+    export PYENV_ROOT="$PYENV_ROOT"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    
+    # Initialize pyenv if not already done
+    if ! command -v pyenv &> /dev/null; then
+        eval "$(pyenv init -)"
+    fi
+    
+    # Check if Python version is already installed
+    if [[ -d "$PYENV_ROOT/versions/$PYTHON_VERSION" ]]; then
+        echo -e "${BLUE}Python $PYTHON_VERSION already installed${NC}"
+    else
+        echo -e "${BLUE}Installing Python $PYTHON_VERSION with pyenv...${NC}"
+        
+        # Install Python with pyenv
+        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYTHON_VERSION"
+        
+        if [[ $? -ne 0 ]]; then
+            echo -e "${RED}Failed to install Python $PYTHON_VERSION${NC}"
+            echo -e "${YELLOW}Trying with different configure options...${NC}"
+            
+            # Try with minimal options if the first attempt fails
+            pyenv install "$PYTHON_VERSION"
+            
+            if [[ $? -ne 0 ]]; then
+                echo -e "${RED}Failed to install Python $PYTHON_VERSION. Please check logs.${NC}"
+                exit 1
+            fi
+        fi
+    fi
+    
+    # Set Python version for LEWIS
+    cd "$LEWIS_HOME" 2>/dev/null || mkdir -p "$LEWIS_HOME"
+    pyenv local "$PYTHON_VERSION"
+    
+    # Verify installation
+    if [[ -x "$LEWIS_PYTHON_PATH" ]]; then
+        echo -e "${GREEN}Python $PYTHON_VERSION installed successfully${NC}"
+        echo -e "${BLUE}Python path: $LEWIS_PYTHON_PATH${NC}"
+        
+        # Show Python version
+        "$LEWIS_PYTHON_PATH" --version
+    else
+        echo -e "${RED}Python installation verification failed${NC}"
+        exit 1
+    fi
+    
+    # Create pyenv profile script for system-wide access
+    cat > "/etc/profile.d/pyenv.sh" << 'EOF'
+# pyenv initialization
+export PYENV_ROOT="/opt/pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+EOF
+    
+    chmod +x "/etc/profile.d/pyenv.sh"
+    
+    # Set ownership of pyenv directory
+    chown -R root:root "$PYENV_ROOT"
+    chmod -R 755 "$PYENV_ROOT"
+    
+    echo -e "${GREEN}pyenv and Python $PYTHON_VERSION setup completed${NC}"
 }
 
 # Create system user for LEWIS
@@ -285,19 +410,114 @@ install_lewis_source() {
 
 # Create Python virtual environment and install dependencies
 setup_python_environment() {
-    echo -e "${YELLOW}Setting up Python environment...${NC}"
+    echo -e "${YELLOW}Setting up Python environment with pyenv Python $PYTHON_VERSION...${NC}"
     
-    # Create virtual environment
-    sudo -u "$LEWIS_USER" python3 -m venv "$LEWIS_HOME/venv"
+    # Ensure pyenv is available
+    export PYENV_ROOT="$PYENV_ROOT"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
     
-    # Activate and install dependencies
+    # Verify Python installation
+    if [[ ! -x "$LEWIS_PYTHON_PATH" ]]; then
+        echo -e "${RED}Python $PYTHON_VERSION not found at $LEWIS_PYTHON_PATH${NC}"
+        exit 1
+    fi
+    
+    echo -e "${BLUE}Using Python: $LEWIS_PYTHON_PATH${NC}"
+    "$LEWIS_PYTHON_PATH" --version
+    
+    # Create virtual environment using pyenv Python
+    echo -e "${BLUE}Creating virtual environment...${NC}"
+    sudo -u "$LEWIS_USER" "$LEWIS_PYTHON_PATH" -m venv "$LEWIS_HOME/venv"
+    
+    # Verify virtual environment
+    if [[ ! -f "$LEWIS_HOME/venv/bin/python" ]]; then
+        echo -e "${RED}Failed to create virtual environment${NC}"
+        exit 1
+    fi
+    
+    # Upgrade pip and install dependencies
+    echo -e "${BLUE}Installing Python dependencies...${NC}"
     sudo -u "$LEWIS_USER" bash -c "
         source '$LEWIS_HOME/venv/bin/activate'
+        python --version
+        pip --version
+        
+        echo 'Upgrading pip and setuptools...'
         pip install --upgrade pip setuptools wheel
-        pip install -r '$LEWIS_HOME/requirements.txt'
+        
+        echo 'Installing LEWIS dependencies...'
+        # Use Python 3.11.9 optimized requirements if available
+        if [[ -f '$LEWIS_HOME/requirements-python311.txt' ]]; then
+            echo 'Using Python 3.11.9 optimized requirements...'
+            pip install -r '$LEWIS_HOME/requirements-python311.txt'
+        else
+            echo 'Using standard requirements...'
+            pip install -r '$LEWIS_HOME/requirements.txt'
+        fi
+        
+        echo 'Verifying critical dependencies...'
+        python -c 'import torch; print(f\"PyTorch version: {torch.__version__}\")'
+        python -c 'import transformers; print(f\"Transformers version: {transformers.__version__}\")'
+        python -c 'import flask; print(f\"Flask version: {flask.__version__}\")'
+        python -c 'import numpy; print(f\"NumPy version: {numpy.__version__}\")'
     "
     
-    echo -e "${GREEN}Python environment configured${NC}"
+    if [[ $? -eq 0 ]]; then
+        echo -e "${GREEN}Python environment configured successfully${NC}"
+    else
+        echo -e "${RED}Failed to install Python dependencies${NC}"
+        echo -e "${YELLOW}Trying with alternative approach...${NC}"
+        
+        # Try installing with no-cache and individual packages
+        sudo -u "$LEWIS_USER" bash -c "
+            source '$LEWIS_HOME/venv/bin/activate'
+            pip install --no-cache-dir --upgrade pip setuptools wheel
+            
+            # Install core dependencies first
+            pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+            pip install --no-cache-dir transformers sentence-transformers
+            pip install --no-cache-dir flask flask-cors flask-socketio
+            pip install --no-cache-dir fastapi uvicorn
+            pip install --no-cache-dir numpy pandas scikit-learn
+            
+            # Install remaining dependencies
+            if [[ -f '$LEWIS_HOME/requirements-python311.txt' ]]; then
+                pip install --no-cache-dir -r '$LEWIS_HOME/requirements-python311.txt' || true
+            else
+                pip install --no-cache-dir -r '$LEWIS_HOME/requirements.txt' || true
+            fi
+        "
+    fi
+    
+    # Create Python activation script for LEWIS user
+    cat > "$LEWIS_HOME/activate_lewis_python.sh" << EOF
+#!/bin/bash
+# LEWIS Python Environment Activation Script
+
+# Set up pyenv
+export PYENV_ROOT="$PYENV_ROOT"
+export PATH="\$PYENV_ROOT/bin:\$PATH"
+eval "\$(pyenv init -)"
+
+# Set Python version
+cd "$LEWIS_HOME"
+pyenv local "$PYTHON_VERSION"
+
+# Activate virtual environment
+source "$LEWIS_HOME/venv/bin/activate"
+
+# Show Python info
+echo "LEWIS Python Environment Activated"
+echo "Python version: \$(python --version)"
+echo "Python path: \$(which python)"
+echo "Virtual environment: $LEWIS_HOME/venv"
+EOF
+
+    chmod +x "$LEWIS_HOME/activate_lewis_python.sh"
+    chown "$LEWIS_USER:$LEWIS_USER" "$LEWIS_HOME/activate_lewis_python.sh"
+    
+    echo -e "${GREEN}Python environment setup completed${NC}"
 }
 
 # Configure databases
@@ -493,8 +713,10 @@ Type=simple
 User=$LEWIS_USER
 Group=$LEWIS_USER
 WorkingDirectory=$LEWIS_HOME
-Environment=PATH=$LEWIS_HOME/venv/bin
-ExecStart=$LEWIS_HOME/venv/bin/python lewis.py --mode server --config /etc/lewis/config.yaml
+Environment=PYENV_ROOT=$PYENV_ROOT
+Environment=PATH=$PYENV_ROOT/bin:$LEWIS_HOME/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStartPre=/bin/bash -c 'cd $LEWIS_HOME && export PYENV_ROOT=$PYENV_ROOT && export PATH=$PYENV_ROOT/bin:\$PATH && eval "\$(pyenv init -)" && pyenv local $PYTHON_VERSION'
+ExecStart=/bin/bash -c 'source $LEWIS_HOME/activate_lewis_python.sh && python lewis.py --mode server --config /etc/lewis/config.yaml'
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=always
 RestartSec=10
@@ -569,11 +791,13 @@ create_startup_scripts() {
     # Main startup script
     cat > "$LEWIS_HOME/start_lewis.sh" << EOF
 #!/bin/bash
-# LEWIS Startup Script
+# LEWIS Startup Script with pyenv Python $PYTHON_VERSION
 
 LEWIS_HOME="$LEWIS_HOME"
 LEWIS_USER="$LEWIS_USER"
 CONFIG_FILE="/etc/lewis/config.yaml"
+PYENV_ROOT="$PYENV_ROOT"
+PYTHON_VERSION="$PYTHON_VERSION"
 
 # Check if running as LEWIS user
 if [[ \$(whoami) != "$LEWIS_USER" ]]; then
@@ -582,11 +806,23 @@ if [[ \$(whoami) != "$LEWIS_USER" ]]; then
     exit \$?
 fi
 
+# Set up pyenv environment
+export PYENV_ROOT="\$PYENV_ROOT"
+export PATH="\$PYENV_ROOT/bin:\$PATH"
+eval "\$(pyenv init -)"
+
+# Change to LEWIS directory and set Python version
+cd "\$LEWIS_HOME"
+pyenv local "\$PYTHON_VERSION"
+
 # Activate virtual environment
 source "\$LEWIS_HOME/venv/bin/activate"
 
+# Verify Python version
+echo "Using Python: \$(python --version)"
+echo "Python path: \$(which python)"
+
 # Start LEWIS
-cd "\$LEWIS_HOME"
 python lewis.py --config "\$CONFIG_FILE" "\$@"
 EOF
 
@@ -730,10 +966,12 @@ finalize_installation() {
     systemctl start redis 2>/dev/null || true
     
     # Test installation
-    echo -e "${BLUE}Testing installation...${NC}"
+    echo -e "${BLUE}Testing installation with pyenv Python $PYTHON_VERSION...${NC}"
     sudo -u "$LEWIS_USER" bash -c "
-        source '$LEWIS_HOME/venv/bin/activate'
+        source '$LEWIS_HOME/activate_lewis_python.sh'
         cd '$LEWIS_HOME'
+        python --version
+        python -c 'import sys; print(f\"Python executable: {sys.executable}\")'
         python -c 'import lewis; print(\"LEWIS modules imported successfully\")'
     "
     
@@ -755,6 +993,9 @@ print_post_install_info() {
     echo "• Logs: $LEWIS_LOGS"
     echo "• Data: $LEWIS_DATA"
     echo "• Service User: $LEWIS_USER"
+    echo "• Python Version: $PYTHON_VERSION (via pyenv)"
+    echo "• Python Path: $LEWIS_PYTHON_PATH"
+    echo "• pyenv Root: $PYENV_ROOT"
     echo ""
     echo -e "${YELLOW}Usage:${NC}"
     echo "• Start LEWIS service: sudo systemctl start lewis"
@@ -766,6 +1007,7 @@ print_post_install_info() {
     echo "• CLI Mode: lewis"
     echo "• GUI Mode: lewis-gui"
     echo "• Direct access: $LEWIS_HOME/start_lewis.sh"
+    echo "• Python environment: source $LEWIS_HOME/activate_lewis_python.sh"
     echo ""
     echo -e "${YELLOW}Web Interface:${NC}"
     echo "• URL: http://$(hostname -I | awk '{print $1}'):8000"
@@ -805,6 +1047,7 @@ main() {
     
     # Installation steps
     install_system_dependencies
+    install_pyenv_python
     create_lewis_user
     create_directories
     install_lewis_source
