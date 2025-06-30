@@ -27,10 +27,7 @@ GITHUB_REPO="https://github.com/yashab-cyber/lewis.git"
 ZEHRASEC_WEBSITE="https://www.zehrasec.com"
 CREATOR_EMAIL="yashabalam707@gmail.com"
 
-# Python version configuration
-PYTHON_VERSION="3.11.9"
-PYENV_ROOT="/opt/pyenv"
-LEWIS_PYTHON_PATH="$PYENV_ROOT/versions/$PYTHON_VERSION/bin/python"
+
 
 # System detection
 detect_os() {
@@ -268,88 +265,7 @@ install_system_dependencies() {
     echo -e "${GREEN}System dependencies installed successfully${NC}"
 }
 
-# Install and configure pyenv with Python 3.11.9
-install_pyenv_python() {
-    echo -e "${YELLOW}Installing pyenv and Python ${PYTHON_VERSION}...${NC}"
-    
-    # Check if pyenv is already installed
-    if [[ -d "$PYENV_ROOT" ]]; then
-        echo -e "${BLUE}pyenv already exists at $PYENV_ROOT${NC}"
-    else
-        # Install pyenv
-        echo -e "${BLUE}Installing pyenv...${NC}"
-        git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT"
-        
-        # Set up pyenv environment
-        export PYENV_ROOT="$PYENV_ROOT"
-        export PATH="$PYENV_ROOT/bin:$PATH"
-        eval "$(pyenv init -)"
-    fi
-    
-    # Ensure pyenv is in PATH for this session
-    export PYENV_ROOT="$PYENV_ROOT"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    
-    # Initialize pyenv if not already done
-    if ! command -v pyenv &> /dev/null; then
-        eval "$(pyenv init -)"
-    fi
-    
-    # Check if Python version is already installed
-    if [[ -d "$PYENV_ROOT/versions/$PYTHON_VERSION" ]]; then
-        echo -e "${BLUE}Python $PYTHON_VERSION already installed${NC}"
-    else
-        echo -e "${BLUE}Installing Python $PYTHON_VERSION with pyenv...${NC}"
-        
-        # Install Python with pyenv
-        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYTHON_VERSION"
-        
-        if [[ $? -ne 0 ]]; then
-            echo -e "${RED}Failed to install Python $PYTHON_VERSION${NC}"
-            echo -e "${YELLOW}Trying with different configure options...${NC}"
-            
-            # Try with minimal options if the first attempt fails
-            pyenv install "$PYTHON_VERSION"
-            
-            if [[ $? -ne 0 ]]; then
-                echo -e "${RED}Failed to install Python $PYTHON_VERSION. Please check logs.${NC}"
-                exit 1
-            fi
-        fi
-    fi
-    
-    # Set Python version for LEWIS
-    cd "$LEWIS_HOME" 2>/dev/null || mkdir -p "$LEWIS_HOME"
-    pyenv local "$PYTHON_VERSION"
-    
-    # Verify installation
-    if [[ -x "$LEWIS_PYTHON_PATH" ]]; then
-        echo -e "${GREEN}Python $PYTHON_VERSION installed successfully${NC}"
-        echo -e "${BLUE}Python path: $LEWIS_PYTHON_PATH${NC}"
-        
-        # Show Python version
-        "$LEWIS_PYTHON_PATH" --version
-    else
-        echo -e "${RED}Python installation verification failed${NC}"
-        exit 1
-    fi
-    
-    # Create pyenv profile script for system-wide access
-    cat > "/etc/profile.d/pyenv.sh" << 'EOF'
-# pyenv initialization
-export PYENV_ROOT="/opt/pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-EOF
-    
-    chmod +x "/etc/profile.d/pyenv.sh"
-    
-    # Set ownership of pyenv directory
-    chown -R root:root "$PYENV_ROOT"
-    chmod -R 755 "$PYENV_ROOT"
-    
-    echo -e "${GREEN}pyenv and Python $PYTHON_VERSION setup completed${NC}"
-}
+
 
 # Create system user for LEWIS
 create_lewis_user() {
@@ -447,14 +363,7 @@ setup_python_environment() {
         pip install --upgrade pip setuptools wheel
         
         echo 'Installing LEWIS dependencies...'
-        # Use Python 3.11.9 optimized requirements if available
-        if [[ -f '$LEWIS_HOME/requirements-python311.txt' ]]; then
-            echo 'Using Python 3.11.9 optimized requirements...'
-            pip install -r '$LEWIS_HOME/requirements-python311.txt'
-        else
-            echo 'Using standard requirements...'
-            pip install -r '$LEWIS_HOME/requirements.txt'
-        fi
+        pip install -r '$LEWIS_HOME/requirements.txt'
         
         echo 'Verifying critical dependencies...'
         python -c 'import torch; print(f\"PyTorch version: {torch.__version__}\")'
@@ -1047,7 +956,6 @@ main() {
     
     # Installation steps
     install_system_dependencies
-    install_pyenv_python
     create_lewis_user
     create_directories
     install_lewis_source
