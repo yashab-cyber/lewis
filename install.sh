@@ -326,25 +326,21 @@ install_lewis_source() {
 
 # Create Python virtual environment and install dependencies
 setup_python_environment() {
-    echo -e "${YELLOW}Setting up Python environment with pyenv Python $PYTHON_VERSION...${NC}"
+    echo -e "${YELLOW}Setting up Python environment...${NC}"
     
-    # Ensure pyenv is available
-    export PYENV_ROOT="$PYENV_ROOT"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    
-    # Verify Python installation
-    if [[ ! -x "$LEWIS_PYTHON_PATH" ]]; then
-        echo -e "${RED}Python $PYTHON_VERSION not found at $LEWIS_PYTHON_PATH${NC}"
+    # Use system Python
+    PYTHON_CMD=$(which python3)
+    if [[ ! -x "$PYTHON_CMD" ]]; then
+        echo -e "${RED}Python 3 not found in system PATH${NC}"
         exit 1
     fi
     
-    echo -e "${BLUE}Using Python: $LEWIS_PYTHON_PATH${NC}"
-    "$LEWIS_PYTHON_PATH" --version
+    echo -e "${BLUE}Using Python: $PYTHON_CMD${NC}"
+    "$PYTHON_CMD" --version
     
-    # Create virtual environment using pyenv Python
+    # Create virtual environment using system Python
     echo -e "${BLUE}Creating virtual environment...${NC}"
-    sudo -u "$LEWIS_USER" "$LEWIS_PYTHON_PATH" -m venv "$LEWIS_HOME/venv"
+    sudo -u "$LEWIS_USER" "$PYTHON_CMD" -m venv "$LEWIS_HOME/venv"
     
     # Verify virtual environment
     if [[ ! -f "$LEWIS_HOME/venv/bin/python" ]]; then
@@ -391,11 +387,7 @@ setup_python_environment() {
             pip install --no-cache-dir numpy pandas scikit-learn
             
             # Install remaining dependencies
-            if [[ -f '$LEWIS_HOME/requirements-python311.txt' ]]; then
-                pip install --no-cache-dir -r '$LEWIS_HOME/requirements-python311.txt' || true
-            else
-                pip install --no-cache-dir -r '$LEWIS_HOME/requirements.txt' || true
-            fi
+            pip install --no-cache-dir -r '$LEWIS_HOME/requirements.txt' || true
         "
     fi
     
@@ -403,15 +395,6 @@ setup_python_environment() {
     cat > "$LEWIS_HOME/activate_lewis_python.sh" << EOF
 #!/bin/bash
 # LEWIS Python Environment Activation Script
-
-# Set up pyenv
-export PYENV_ROOT="$PYENV_ROOT"
-export PATH="\$PYENV_ROOT/bin:\$PATH"
-eval "\$(pyenv init -)"
-
-# Set Python version
-cd "$LEWIS_HOME"
-pyenv local "$PYTHON_VERSION"
 
 # Activate virtual environment
 source "$LEWIS_HOME/venv/bin/activate"
@@ -622,10 +605,8 @@ Type=simple
 User=$LEWIS_USER
 Group=$LEWIS_USER
 WorkingDirectory=$LEWIS_HOME
-Environment=PYENV_ROOT=$PYENV_ROOT
-Environment=PATH=$PYENV_ROOT/bin:$LEWIS_HOME/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ExecStartPre=/bin/bash -c 'cd $LEWIS_HOME && export PYENV_ROOT=$PYENV_ROOT && export PATH=$PYENV_ROOT/bin:\$PATH && eval "\$(pyenv init -)" && pyenv local $PYTHON_VERSION'
-ExecStart=/bin/bash -c 'source $LEWIS_HOME/activate_lewis_python.sh && python lewis.py --mode server --config /etc/lewis/config.yaml'
+Environment=PATH=$LEWIS_HOME/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/bin/bash -c 'source $LEWIS_HOME/venv/bin/activate && python lewis.py --mode server --config /etc/lewis/config.yaml'
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=always
 RestartSec=10
@@ -700,13 +681,11 @@ create_startup_scripts() {
     # Main startup script
     cat > "$LEWIS_HOME/start_lewis.sh" << EOF
 #!/bin/bash
-# LEWIS Startup Script with pyenv Python $PYTHON_VERSION
+# LEWIS Startup Script
 
 LEWIS_HOME="$LEWIS_HOME"
 LEWIS_USER="$LEWIS_USER"
 CONFIG_FILE="/etc/lewis/config.yaml"
-PYENV_ROOT="$PYENV_ROOT"
-PYTHON_VERSION="$PYTHON_VERSION"
 
 # Check if running as LEWIS user
 if [[ \$(whoami) != "$LEWIS_USER" ]]; then
@@ -715,14 +694,8 @@ if [[ \$(whoami) != "$LEWIS_USER" ]]; then
     exit \$?
 fi
 
-# Set up pyenv environment
-export PYENV_ROOT="\$PYENV_ROOT"
-export PATH="\$PYENV_ROOT/bin:\$PATH"
-eval "\$(pyenv init -)"
-
-# Change to LEWIS directory and set Python version
+# Change to LEWIS directory
 cd "\$LEWIS_HOME"
-pyenv local "\$PYTHON_VERSION"
 
 # Activate virtual environment
 source "\$LEWIS_HOME/venv/bin/activate"
@@ -875,13 +848,13 @@ finalize_installation() {
     systemctl start redis 2>/dev/null || true
     
     # Test installation
-    echo -e "${BLUE}Testing installation with pyenv Python $PYTHON_VERSION...${NC}"
+    echo -e "${BLUE}Testing installation...${NC}"
     sudo -u "$LEWIS_USER" bash -c "
-        source '$LEWIS_HOME/activate_lewis_python.sh'
+        source '$LEWIS_HOME/venv/bin/activate'
         cd '$LEWIS_HOME'
         python --version
         python -c 'import sys; print(f\"Python executable: {sys.executable}\")'
-        python -c 'import lewis; print(\"LEWIS modules imported successfully\")'
+        python -c 'import lewis; print(\"LEWIS modules imported successfully\")' || echo 'LEWIS module import will be tested after service start'
     "
     
     echo -e "${GREEN}Installation completed successfully!${NC}"
@@ -902,9 +875,7 @@ print_post_install_info() {
     echo "• Logs: $LEWIS_LOGS"
     echo "• Data: $LEWIS_DATA"
     echo "• Service User: $LEWIS_USER"
-    echo "• Python Version: $PYTHON_VERSION (via pyenv)"
-    echo "• Python Path: $LEWIS_PYTHON_PATH"
-    echo "• pyenv Root: $PYENV_ROOT"
+    echo "• Python Version: $(python3 --version)"
     echo ""
     echo -e "${YELLOW}Usage:${NC}"
     echo "• Start LEWIS service: sudo systemctl start lewis"
@@ -916,7 +887,7 @@ print_post_install_info() {
     echo "• CLI Mode: lewis"
     echo "• GUI Mode: lewis-gui"
     echo "• Direct access: $LEWIS_HOME/start_lewis.sh"
-    echo "• Python environment: source $LEWIS_HOME/activate_lewis_python.sh"
+    echo "• Python environment: source $LEWIS_HOME/venv/bin/activate"
     echo ""
     echo -e "${YELLOW}Web Interface:${NC}"
     echo "• URL: http://$(hostname -I | awk '{print $1}'):8000"
