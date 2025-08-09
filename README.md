@@ -21,7 +21,7 @@
 
 ## 🚀 Overview
 
-**LEWIS** (Linux Environment Working Intelligence System) is an enterprise-grade, AI-powered cybersecurity platform designed for professional security analysts, ethical hackers, and cybersecurity teams. Developed by **[Yashab Alam](https://linkedin.com/in/yashabalam)**, founder and CEO of **[ZehraSec](https://www.zehrasec.com)**, LEWIS transforms traditional cybersecurity workflows through advanced natural language processing, machine learning, and intelligent automation.
+**LEWIS** (Linux Environment Working Intelligence System) is an enterprise-grade, AI-powered cybersecurity platform designed for professional security analysts, ethical hackers, and cybersecurity teams. Developed by **[Yashab Alam](https://www.linkedin.com/in/yashab-alam)**, founder and CEO of **[ZehraSec](https://www.zehrasec.com)**, LEWIS transforms traditional cybersecurity workflows through advanced natural language processing, machine learning, and intelligent automation.
 
 ### 🌟 Key Differentiators
 - **AI-First Architecture**: Built from the ground up with artificial intelligence at its core
@@ -859,7 +859,7 @@ LEWIS is designed for educational and authorized security testing purposes only.
 ### 👨‍💻 **Connect with Yashab Alam (Founder & CEO)**
 
 [![GitHub](https://img.shields.io/badge/💻_GitHub-@yashab--cyber-181717?style=for-the-badge&logo=github)](https://github.com/yashab-cyber)
-[![LinkedIn](https://img.shields.io/badge/💼_LinkedIn-Yashab_Alam-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/yashabalam)
+[![LinkedIn](https://img.shields.io/badge/💼_LinkedIn-Yashab_Alam-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/yashab-alam)
 [![Instagram](https://img.shields.io/badge/📸_Instagram-@yashab.alam-E4405F?style=for-the-badge&logo=instagram)](https://www.instagram.com/yashab.alam)
 
 </div>
@@ -932,7 +932,7 @@ LEWIS is designed for educational and authorized security testing purposes only.
 
 ### 🙏 **Special Thanks**
 - **[ZehraSec Team](https://www.zehrasec.com)** - Leading cybersecurity company and project sponsor
-- **[Yashab Alam](https://linkedin.com/in/yashabalam)** - Visionary founder and lead architect
+- **[Yashab Alam](https://www.linkedin.com/in/yashab-alam)** - Visionary founder and lead architect
 - **Open Source Community** - Contributors and maintainers worldwide
 - **Security Researchers** - Ethical hackers advancing cybersecurity
 
@@ -967,7 +967,7 @@ For a complete message from the development team, see [developermessage.md](deve
 
 ---
 
-## 🚀 **Made with ❤️ by [Yashab Alam](https://linkedin.com/in/yashabalam) and the [ZehraSec](https://www.zehrasec.com) Team**
+## 🚀 **Made with ❤️ by [Yashab Alam](https://www.linkedin.com/in/yashab-alam) and the [ZehraSec](https://www.zehrasec.com) Team**
 
 ### *"Empowering cybersecurity professionals through AI innovation"*
 

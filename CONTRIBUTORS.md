@@ -6,7 +6,7 @@ This file acknowledges all the contributors who have helped make LEWIS (Linux En
 
 **Yashab Alam** - *Creator, Lead Developer & Project Maintainer*
 - GitHub: [@yashab-cyber](https://github.com/yashab-cyber)
-- LinkedIn: [yashabalam](https://linkedin.com/in/yashabalam)
+- LinkedIn: [yashab-alam](https://www.linkedin.com/in/yashab-alam)
 - Email: yashabalam707@gmail.com
 - Role: Founder and CEO of ZehraSec, Creator of LEWIS
 - Contributions: Initial concept, core architecture, AI/ML implementation, documentation

@@ -8,7 +8,7 @@ This document answers the most commonly asked questions about LEWIS installation
 **LEWIS** (Linux Environment Working Intelligence System) is an AI-powered cybersecurity platform that uses natural language processing to simplify complex security operations. It allows security professionals to interact with cybersecurity tools using plain English commands.
 
 ### Who developed LEWIS?
-LEWIS was developed by **[Yashab Alam](https://linkedin.com/in/yashabalam)**, founder and CEO of **[ZehraSec](https://www.zehrasec.com)**, a leading cybersecurity company specializing in AI-driven security solutions.
+LEWIS was developed by **[Yashab Alam](https://www.linkedin.com/in/yashab-alam)**, founder and CEO of **[ZehraSec](https://www.zehrasec.com)**, a leading cybersecurity company specializing in AI-driven security solutions.
 
 ### What makes LEWIS different from other security tools?
 - **AI-First Architecture**: Built from the ground up with artificial intelligence

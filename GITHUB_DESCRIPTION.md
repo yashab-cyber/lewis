@@ -142,7 +142,7 @@ LEWIS follows a modular, extensible architecture:
 ### Connect With Us
 - 💬 **Discord**: [Join our community](https://discord.gg/lewis-community)
 - 🐦 **Twitter**: [@ZehraSec](https://twitter.com/ZehraSec)
-- 💼 **LinkedIn**: [Yashab Alam](https://linkedin.com/in/yashabalam)
+- 💼 **LinkedIn**: [Yashab Alam](https://www.linkedin.com/in/yashab-alam)
 - 📧 **Email**: [yashabalam707@gmail.com](mailto:yashabalam707@gmail.com)
 
 ## 🏆 Recognition & Awards
@@ -204,6 +204,6 @@ See [LICENSE](LICENSE) for full terms and [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 
 ### *"Empowering cybersecurity professionals through AI innovation"*
 
-**Made with ❤️ by [Yashab Alam](https://linkedin.com/in/yashabalam) and the [ZehraSec](https://www.zehrasec.com) Team**
+**Made with ❤️ by [Yashab Alam](https://www.linkedin.com/in/yashab-alam) and the [ZehraSec](https://www.zehrasec.com) Team**
 
 </div>

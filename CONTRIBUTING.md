@@ -244,7 +244,7 @@ Contributors will be recognized in:
 ### Contact Maintainers
 - **Yashab Alam**: [@yashab-cyber](https://github.com/yashab-cyber)
 - **Email**: yashabalam707@gmail.com
-- **LinkedIn**: [Yashab Alam](https://www.linkedin.com/in/yashabalam)
+- **LinkedIn**: [Yashab Alam](https://www.linkedin.com/in/yashab-alam)
 
 ## License
 

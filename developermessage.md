@@ -159,7 +159,7 @@ We'd love to hear from you! Connect with us:
 
 - 🐙 **GitHub**: [github.com/yashab-cyber/lewis](https://github.com/yashab-cyber/lewis)
 - 🌐 **Website**: [www.zehrasec.com](https://www.zehrasec.com)
-- 💼 **LinkedIn**: [linkedin.com/in/yashabalam](https://linkedin.com/in/yashabalam)
+- 💼 **LinkedIn**: [linkedin.com/in/yashab-alam](https://www.linkedin.com/in/yashab-alam)
 - 📧 **Email**: [contact@zehrasec.com](mailto:contact@zehrasec.com)
 - 🐦 **Twitter**: [@ZehraSec](https://twitter.com/ZehraSec)
 - 💬 **Discord**: [Join our community](https://discord.gg/zehrasec)

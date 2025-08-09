@@ -223,7 +223,7 @@ LEWIS is a production-ready, enterprise-grade AI-powered cybersecurity platform 
 - **Project Lead**: Yashab Alam (yashabalam707@gmail.com)
 - **Organization**: ZehraSec (contact@zehrasec.com)
 - **Website**: [zehrasec.com](https://www.zehrasec.com)
-- **LinkedIn**: [yashabalam](https://linkedin.com/in/yashabalam)
+- **LinkedIn**: [yashab-alam](https://www.linkedin.com/in/yashab-alam)
 
 ---
 

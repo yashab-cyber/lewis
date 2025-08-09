@@ -138,7 +138,7 @@ If you need additional help:
 
 **📝 Manual Version:** 1.0.0  
 **📅 Last Updated:** June 21, 2025  
-**👨‍💻 Maintained by:** [Yashab Alam](https://linkedin.com/in/yashabalam) & [ZehraSec Team](https://www.zehrasec.com)  
+**👨‍💻 Maintained by:** [Yashab Alam](https://www.linkedin.com/in/yashab-alam) & [ZehraSec Team](https://www.zehrasec.com)  
 
 ---
 

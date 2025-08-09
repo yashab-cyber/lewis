@@ -165,7 +165,7 @@ The LEWIS project has successfully completed all development phases and is **ful
 ### Project Leadership
 - **Creator & Lead Developer**: Yashab Alam
 - **Email**: yashabalam707@gmail.com
-- **LinkedIn**: [yashabalam](https://linkedin.com/in/yashabalam)
+- **LinkedIn**: [yashab-alam](https://www.linkedin.com/in/yashab-alam)
 - **Organization**: ZehraSec
 - **Website**: [zehrasec.com](https://www.zehrasec.com)
 
